@@ -1,0 +1,92 @@
+.login-bg{
+	position: relative;
+    min-height: 100vh !important; 
+    background-size: cover !important;
+    background-attachment: fixed !important;
+    background-position: center 0;
+    .logo{
+    	img{
+    		width: 200px !important;
+    	}
+    	h3{
+    		font-weight: 700;
+			font-size:20px;
+			color: #183884;
+			display: block;
+			border-left: 2px solid #183884;
+			padding-left: 20px;
+    	}
+
+    }
+
+   
+    .formulario{
+    	h4{
+			font-weight: 700;
+			font-size:32px;
+			color: #183884;
+			padding: 30px 0px	;
+    	}
+    	.input{
+
+    		border-radius: 50px;
+    		padding: 0px 20px;
+    		color:  #183884 !important;
+    		background: rgba(#e8f0fe, 0.6)!important;
+    		input{
+    		border: none;
+ 			background: transparent !important;
+    		font-size: 20px;
+    		 color: #183884;
+    		 &::placeholder {
+             color:  #183884;
+            }
+
+            &::-webkit-input-placeholder {
+              color:  #183884;
+            }
+            &::-moz-placeholder {
+              color:  #183884;
+            }
+            &:-ms-input-placeholder {
+              color:  #183884;
+            }
+            &:-moz-placeholder {
+              color: #183884;            } 
+            &:focus, &:active{
+            	border: none !important;
+            	box-shadow: none !important;
+            }       
+
+    	}
+    	
+    	}
+    }
+    .form-group {
+    	color: #000;
+
+        
+    	.btn{
+    		border-radius: 50px;
+
+    		color:  #e8f0fe !important;
+    			background: #183884 !important;
+    		
+    		&:hover{
+				background:  #e8f0fe !important;
+    		color: #183884 !important;
+    		}
+    	}
+    }
+}
+ @media screen and (max-width: 557px) {
+   .login-bg{
+   	.logo{
+   			h3{
+    		padding: 20px 0px;
+			border-left: none;
+			
+    	}
+   	}
+   }
+  }
