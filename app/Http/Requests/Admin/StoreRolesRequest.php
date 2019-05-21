@@ -1,6 +1,6 @@
 <?php
 namespace App\Http\Requests\Admin;
-
+use Illuminate\Support\Facades\Gate;
 use App\Role;
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -11,9 +11,9 @@ class StoreRolesRequest extends FormRequest
      *
      * @return bool
      */
-    public function authorize()
+     public function authorize()
     {
-        return true;
+        return abort_if(Gate::denies('role_create'), 403, '403 Forbidden') ?? true;
     }
 
     /**

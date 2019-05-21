@@ -11,9 +11,9 @@ class StoreCaracteristicasRequest extends FormRequest
      *
      * @return bool
      */
-    public function authorize()
+     public function authorize()
     {
-        return true;
+        return abort_if(Gate::denies('caracteristica_create'), 403, '403 Forbidden') ?? true;
     }
 
     /**

@@ -13,7 +13,7 @@ class UpdateTiposRequest extends FormRequest
      */
     public function authorize()
     {
-        return true;
+      return \Gate::allows('tipo_edit');
     }
 
     /**

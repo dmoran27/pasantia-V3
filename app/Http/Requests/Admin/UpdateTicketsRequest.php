@@ -13,7 +13,7 @@ class UpdateTicketesRequest extends FormRequest
      */
     public function authorize()
     {
-        return true;
+        return \Gate::allows('ticket_edit');
     }
 
     /**

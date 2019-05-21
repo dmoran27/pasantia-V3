@@ -13,7 +13,7 @@ class StorePermissionsRequest extends FormRequest
      */
     public function authorize()
     {
-        return true;
+        return abort_if(Gate::denies('permission_create'), 403, '403 Forbidden') ?? true;
     }
 
     /**

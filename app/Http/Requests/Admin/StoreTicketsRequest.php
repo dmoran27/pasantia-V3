@@ -13,7 +13,7 @@ class StoreTicketsRequest extends FormRequest
      */
     public function authorize()
     {
-        return true;
+        return abort_if(Gate::denies('ticket_create'), 403, '403 Forbidden') ?? true;
     }
 
     /**

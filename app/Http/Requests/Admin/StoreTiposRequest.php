@@ -13,9 +13,8 @@ class StoreTiposRequest extends FormRequest
      */
     public function authorize()
     {
-        return true;
+        return abort_if(Gate::denies('tipo_create'), 403, '403 Forbidden') ?? true;
     }
-
     /**
      * Get the validation rules that apply to the request.
      *

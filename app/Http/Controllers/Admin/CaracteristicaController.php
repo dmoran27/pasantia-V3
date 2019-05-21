@@ -1,75 +1,73 @@
 <?php
 
 namespace App\Http\Controllers\Admin;
-use App\Caracteristica;
+
 use App\Http\Controllers\Controller;
-use App\Http\Resources\Caracteristica as CaracteristicaResource;
-use App\Http\Requests\Admin\StoreCaracteristicasRequest;
-use App\Http\Requests\Admin\UpdateCaracteristicasRequest;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Gate;
-
-
+use App\Http\Requests\Admin\MassDestroyCaracteristicaRequest;
+use App\Http\Requests\Admin\StoreCaracteristicaRequest;
+use App\Http\Requests\Admin\UpdateCaracteristicaRequest;
+use App\General;
+use App\Role;
+use App\Caracteristica;
+use App\Area;
 
 class CaracteristicasController extends Controller
 {
     public function index()
     {
-        if (Gate::denies('caracteristica_access')) {
-            return abort(401);
-        }
-
-        return new CaracteristicaResource::all();
+        abort_unless(\Gate::allows('caracteristica_access'), 403);
+        $caracteristicas = Caracteristica::all();
+        return view('admin.caracteristicas.index', compact('Caracteristicas'));
     }
 
-    public function show($id)
+    public function create()
     {
-        if (Gate::denies('caracteristica_view')) {
-            return abort(401);
-        }
-
-        $caracteristica = Caracteristica::findOrFail($id);
-
-        return new CaracteristicaResource($caracteristica);
+        abort_unless(\Gate::allows('caracteristica_create'), 403);
+        $user = Role::all();
+        return view('admin.caracteristicas.create', compact('user'));
     }
 
-    public function store(StoreCaracteristicasRequest $request)
+    public function store(StoreCaracteristicaRequest $request)
     {
-        if (Gate::denies('caracteristica_create')) {
-            return abort(401);
-        }
-
+        abort_unless(\Gate::allows('caracteristica_create'), 403);
         $caracteristica = Caracteristica::create($request->all());
-        $caracteristica->role()->sync($request->input('role', []));
-        
-
-        return (new CaracteristicaResource($caracteristica))
-            ->response()
-            ->setStatusCode(201);
+        $caracteristica->user()->sync($request->input('user', []));
+        return redirect()->route('admin.caracteristicas.index');
     }
 
-    public function update(UpdateCaracteristicasRequest $request, $id)
+    public function edit(Caracteristica $caracteristica)
     {
-         if (Gate::denies('caracteristica_edit')) {
-            return abort(401);
-        }
-
-        $caracteristica = Caracteristica::findOrFail($id);
-        $caracteristica->update($request->all());     
-        
-        return (new caracteristicaResource($caracteristica))
-            ->response()
-            ->setStatusCode(202);
+        abort_unless(\Gate::allows('caracteristica_edit'), 403);
+        $user = User::all();
+        $caracteristica->load('user','caracteristica');
+        return view('admin.caracteristicas.edit', compact('user', 'caracteristica'));
     }
 
-    public function destroy($id)
+    public function update(UpdateCaracteristicaRequest $request, Caracteristica $caracteristica)
     {
-        if (Gate::denies('caracteristica_delete')) {
-            return abort(401);
-        }
+        abort_unless(\Gate::allows('caracteristica_edit'), 403);
+        $caracteristica->update($request->all());
+        $caracteristica->user()->sync($request->input('user', []));
+        return redirect()->route('admin.caracteristicas.index');
+    }
 
-        $caracteristica = Caracteristica::findOrFail($id);
+    public function show(Caracteristica $caracteristica)
+    {
+        abort_unless(\Gate::allows('caracteristica_show'), 403);
+        $caracteristica->load('user');
+        return view('admin.caracteristicas.show', compact('Caracteristica'));
+    }
+
+    public function destroy(Caracteristica $caracteristica)
+    {
+        abort_unless(\Gate::allows('caracteristica_delete'), 403);
         $caracteristica->delete();
+        return back();
+    }
+
+    public function massDestroy(MassDestroyCaracteristicaRequest $request)
+    {
+        Caracteristica::whereIn('id', request('ids'))->delete();
 
         return response(null, 204);
     }

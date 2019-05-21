@@ -13,7 +13,7 @@ class UpdateClientesRequest extends FormRequest
      */
     public function authorize()
     {
-        return true;
+        return \Gate::allows('cliente_edit');
     }
 
     /**

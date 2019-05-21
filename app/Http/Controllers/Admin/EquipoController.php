@@ -1,176 +1,90 @@
 <?php
 
 namespace App\Http\Controllers\Admin;
-use App\Equipo;
-use App\Dependencia;
-use App\General;
-use Illuminate\Support\Facades\Validator;
-use Illuminate\Http\Request;
 
-class EquipoController extends Controller
+use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\MassDestroyUserRequest;
+use App\Http\Requests\Admin\StoreUsersRequest;
+use App\Http\Requests\Admin\UpdateUsersRequest;
+use App\General;
+use App\Role;
+use App\User;
+use App\Area;
+
+class UsersController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
-        //
-        
-        $page_title='Equipos';
-        $enumoption = General::getEnumValues('equipos','perteneciente') ;
-        $enumoption2 = General::getEnumValues('equipos','estado_equipo') ;
-        $equipos=Equipo::all();
-        return view('modules.equipos.index', compact('page_title','equipos', 'enumoption', 'enumoption2'));
+        abort_unless(\Gate::allows('user_access'), 403);
+
+        $users = User::all();
+
+        return view('admin.users.index', compact('users'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
-        //
-         $page_title='Crear Equipos';
-         
-         return response()->json("success");
-       
+        abort_unless(\Gate::allows('user_create'), 403);
+
+        $roles = Role::all()->pluck('title', 'id');
+        $enumoption = General::getEnumValues('users','sexo') ;
+        return view('admin.users.create', compact('roles', 'enumoption'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-
-    
-
-    public function store(Request $request)
+    public function store(StoreUsersRequest $request)
     {
-        //
-     $validator = Validator::make($request->all(), [
-            'nombre' => 'required|string|max:255',
-            'identificador' => 'required|string|max:255',
-            'marca' => 'required|string|unique:equipos|max:10',
-            'modelo' => 'string|max:50',
-            'serial' => 'required|string|max:10',
-            'estado_equipo' => 'required|string|max:20',
-            'perteneciente' => 'required|string|max:255',
-            'observacion' => 'required|string|max:1000',
-           // 'tipo_id' => 'required|string',
-            'user_id' => 'required|string',
+        abort_unless(\Gate::allows('user_create'), 403);
 
-        ]);
-        if ($validator->fails()) {
-            return redirect()
-                        ->route('equipos.create')
-                        ->withErrors($validator)
-                        ->withInput();
-        }
-         Equipo::create($request->all());
-        return response()->json("success");
+        $user = User::create($request->all());
+        $user->roles()->sync($request->input('roles', []));
+
+        return redirect()->route('admin.users.index');
     }
 
-
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Area  $area
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
+    public function edit(User $user)
     {
-        //
+        abort_unless(\Gate::allows('user_edit'), 403);
 
-        $equipos=Equipo::findOrFail($id);
-        $page_title='Equipos';
-        return response()->json($equipos);
+        $roles = Role::all()->pluck('title', 'id');
+        $areas = Area::all()->pluck('nombre', 'id');
+        $enumoption = General::getEnumValues('users','sexo', 'areas') ;
+        $user->load('roles','area');
 
-
+        return view('admin.users.edit', compact('roles','enumoption', 'areas', 'user'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Area  $area
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Equipo $equipo)
+    public function update(UpdateUsersRequest $request, User $user)
     {
-               
-        $equipos=Equipo::findOrFail($equipo);
-        return response()->json($equipos);
+        abort_unless(\Gate::allows('user_edit'), 403);
 
+        $user->update($request->all());
+        $user->roles()->sync($request->input('roles', []));
+
+        return redirect()->route('admin.users.index');
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Area  $area
-     * @return \Illuminate\Http\Response
-     */
-    public function update( Request $request, Equipo $equipo)
+    public function show(User $user)
     {
-        //
+        abort_unless(\Gate::allows('user_show'), 403);
 
-        
-        $validator = Validator::make($request->all(), [
-            'nombre' => 'required|string|max:255',
-            'identificador' => 'required|string|max:255',
-            'marca' => 'required|string|unique:equipos|max:10',
-            'modelo' => 'string|max:50',
-            'serial' => 'required|string|max:10',
-            'estado_equipo' => 'required|string|max:20',
-            'perteneciente' => 'required|string|max:255',
-            'observacion' => 'required|string|max:1000',
-            'tipo_id' => 'required|string',
-            'user_id' => 'required|string',
+        $user->load('roles');
 
-        ]);
-         if ($validator->fails()) {            
-           return redirect()
-                        ->route('equipos.edit', $equipo)
-                        ->withErrors($validator)
-                        ->withInput();
-            }
-      
-
-        Equipo::findOrFail($equipo->id)->update($request->all());
-        return redirect()->route('equipos.index');
-
+        return view('admin.users.show', compact('user'));
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\equipos  $equipos
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
+    public function destroy(User $user)
     {
-        //
-      $equipos=Equipo::findOrFail($id)->delete();
-      return response()->json(['id'=>$id]);
+        abort_unless(\Gate::allows('user_delete'), 403);
 
+        $user->delete();
 
+        return back();
     }
 
-    public function changeStatus() 
+    public function massDestroy(MassDestroyUserRequest $request)
     {
-        $id = Input::get('id');
+        User::whereIn('id', request('ids'))->delete();
 
-        $equipos = Equipo::findOrFail($id);
-        $equipos->is_published = !$equipos->is_published;
-        $equipos->save();
-
-        return response()->json($equipos);
+        return response(null, 204);
     }
-
-
-
 }

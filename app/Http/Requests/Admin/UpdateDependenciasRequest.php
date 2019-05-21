@@ -13,7 +13,7 @@ class UpdateDependenciasRequest extends FormRequest
      */
     public function authorize()
     {
-        return true;
+        return \Gate::allows('dependencia_edit');
     }
 
     /**

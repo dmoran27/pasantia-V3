@@ -2,150 +2,63 @@
 
 namespace App\Http\Controllers\Admin;
 
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
-use Illuminate\Database\Eloquent\Buider;
+use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\MassDestroyAreaRequest;
+use App\Http\Requests\Admin\StoreAreasRequest;
+use App\Http\Requests\Admin\UpdateAreasRequest;
+use App\Area;
 
 class AreaController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
-        //
-        $areas=Area::all();
-        
-        //return view('areas.index', compact('areas'));
-        return $areas;
+        abort_unless(\Gate::allows('area_access'), 403);
+        $areas = Area::all();
+        return view('admin.areas.index', compact('areas'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
-        //
-         $areas=Area::all();
-        return view('areas.create', compact('areas'));
-       
+        abort_unless(\Gate::allows('area_create'), 403);
+        return view('admin.areas.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-
-    
-
-    public function store(Request $request)
+    public function store(StoreAreasRequest $request)
     {
-        //
-         $validator = Validator::make($request->all(), [
-            'nombre' => 'required|string|max:255',
-            'descripcion' => 'required|string|max:255',
-
-        ]);
-        
-        if ($validator->fails()) {
-            return redirect()
-                        ->route('areas.create')
-                        ->withErrors($validator)
-                        ->withInput();
-        }
-
-        Area::create($request->all());
-        return redirect()->route('areas.index');
+        abort_unless(\Gate::allows('area_create'), 403);
+        $area = Area::create($request->all());
+        return redirect()->route('admin.areas.index');
     }
 
-
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Area  $area
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Area $area)
-    {
-        //
-
-        $areas=Area::findOrFail($area->id);
-        return view('areas.show', compact('areas'));
-
-
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Area  $area
-     * @return \Illuminate\Http\Response
-     */
     public function edit(Area $area)
     {
-        //
-        
-        $areas=Area::findOrFail($area->id);
-        $areas=Area::all();
-        $enumoption = General::getEnumValues('areas') ;
-       
-        return view('areas.edit', compact('areas'));
-
+        abort_unless(\Gate::allows('area_edit'), 403);
+        return view('admin.areas.edit', compact('areas'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Area  $area
-     * @return \Illuminate\Http\Response
-     */
-    public function update( Request $request, Area $area)
+    public function update(UpdateAreasRequest $request, Area $area)
     {
-        //
-
-        $validator = Validator::make($request->all(), [
-            'nombre' => 'required|string|max:255',
-            'descripcion' => 'required|string|max:255',
-
-        ]);
-
-
-         if ($validator->fails()) {
-            
-           return redirect()
-                        ->route('areas.edit', $area)
-                        ->withErrors($validator)
-                        ->withInput();
-            }
-      
-
-        Area::findOrFail($area->id)->update($request->all());
-        return redirect()->route('areas.index');
-
+        abort_unless(\Gate::allows('area_edit'), 403);
+        $area->update($request->all());
+        return redirect()->route('admin.areas.index');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\areas  $areas
-     * @return \Illuminate\Http\Response
-     */
+    public function show(Area $area)
+    {
+        abort_unless(\Gate::allows('area_show'), 403);
+        return view('admin.areas.show', compact('area'));
+    }
+
     public function destroy(Area $area)
     {
-        //
-      $areas=Area::findOrFail($area->id)->delete();
-  
-        
-        return redirect()->route('areas.index');
-
+        abort_unless(\Gate::allows('area_delete'), 403);
+        $area->delete();
+        return back();
     }
 
+    public function massDestroy(MassDestroyAreaRequest $request)
+    {
+        Area::whereIn('id', request('ids'))->delete();
+        return response(null, 204);
+    }
 }

@@ -1,153 +1,90 @@
 <?php
 
-namespace App\Http\Controllers\Api\V1;
-use App\Tipo;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
-use Illuminate\Database\Eloquent\Buider;
+namespace App\Http\Controllers\Admin;
 
-class TipoController extends Controller
+use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\MassDestroyUserRequest;
+use App\Http\Requests\Admin\StoreUsersRequest;
+use App\Http\Requests\Admin\UpdateUsersRequest;
+use App\General;
+use App\Role;
+use App\User;
+use App\Area;
+
+class UsersController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
-        //
-        $tipos=Tipo::all();
-        
-        return view('modules.tipos.index', compact('tipos'));
-        //return $tipos;
+        abort_unless(\Gate::allows('user_access'), 403);
+
+        $users = User::all();
+
+        return view('admin.users.index', compact('users'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
-        //
-         $tipos=Tipo::all();
-        return view('modules.tipos.create', compact('tipos'));
-       
+        abort_unless(\Gate::allows('user_create'), 403);
+
+        $roles = Role::all()->pluck('title', 'id');
+        $enumoption = General::getEnumValues('users','sexo') ;
+        return view('admin.users.create', compact('roles', 'enumoption'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-
-    
-
-    public function store(Request $request)
+    public function store(StoreUsersRequest $request)
     {
-        //
-         $validator = Validator::make($request->all(), [
-            'nombre' => 'required|string|max:255',
-            'descripcion' => 'required|string|max:255',
-            'tipo' => 'required|string|max:255',
-            'user_id' => 'required|string',
+        abort_unless(\Gate::allows('user_create'), 403);
 
-        ]);
-        
-        if ($validator->fails()) {
-            return redirect()
-                        ->route('tipos.create')
-                        ->withErrors($validator)
-                        ->withInput();
-        }
+        $user = User::create($request->all());
+        $user->roles()->sync($request->input('roles', []));
 
-        Tipo::create($request->all());
-        return redirect()->route('tipos.index');
+        return redirect()->route('admin.users.index');
     }
 
-
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Tipo  $tipo
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Tipo $tipo)
+    public function edit(User $user)
     {
-        //
+        abort_unless(\Gate::allows('user_edit'), 403);
 
-        $tipos=Tipo::findOrFail($tipo->id);
-        return view('modules.tipos.show', compact('tipos'));
+        $roles = Role::all()->pluck('title', 'id');
+        $areas = Area::all()->pluck('nombre', 'id');
+        $enumoption = General::getEnumValues('users','sexo', 'areas') ;
+        $user->load('roles','area');
 
-
+        return view('admin.users.edit', compact('roles','enumoption', 'areas', 'user'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Tipo  $tipo
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Tipo $tipo)
+    public function update(UpdateUsersRequest $request, User $user)
     {
-        //
-        
-        $tipos=Tipo::findOrFail($tipo->id);
-       
-        return view('modules.tipos.edit', compact('tipos'));
+        abort_unless(\Gate::allows('user_edit'), 403);
 
+        $user->update($request->all());
+        $user->roles()->sync($request->input('roles', []));
+
+        return redirect()->route('admin.users.index');
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Tipo  $tipo
-     * @return \Illuminate\Http\Response
-     */
-    public function update( Request $request, Tipo $tipo)
+    public function show(User $user)
     {
-        //
+        abort_unless(\Gate::allows('user_show'), 403);
 
-         $validator = Validator::make($request->all(), [
-            'nombre' => 'required|string|max:255',
-            'descripcion' => 'required|string|max:255',
-            'tipo' => 'required|string|max:255',
-            'user_id' => 'required|string',
+        $user->load('roles');
 
-        ]);
-
-
-         if ($validator->fails()) {
-            
-           return redirect()
-                        ->route('tipos.edit', $tipo)
-                        ->withErrors($validator)
-                        ->withInput();
-            }
-      
-
-        Tipo::findOrFail($tipo->id)->update($request->all());
-        return redirect()->route('tipos.index');
-
+        return view('admin.users.show', compact('user'));
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\tipos  $tipos
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Tipo $tipo)
+    public function destroy(User $user)
     {
-        //
-      $tipos=Tipo::findOrFail($tipo->id)->delete();
-  
-        
-        return redirect()->route('tipos.index');
+        abort_unless(\Gate::allows('user_delete'), 403);
 
+        $user->delete();
+
+        return back();
     }
 
+    public function massDestroy(MassDestroyUserRequest $request)
+    {
+        User::whereIn('id', request('ids'))->delete();
+
+        return response(null, 204);
+    }
 }

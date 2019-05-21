@@ -13,7 +13,7 @@ class UpdateSoftwaresRequest extends FormRequest
      */
     public function authorize()
     {
-        return true;
+       return \Gate::allows('software_edit');
     }
 
     /**
@@ -24,5 +24,8 @@ class UpdateSoftwaresRequest extends FormRequest
     public function rules()
     {
         return Software::updateValidation($this);
+
+
+
     }
 }

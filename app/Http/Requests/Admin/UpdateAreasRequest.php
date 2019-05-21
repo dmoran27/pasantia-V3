@@ -13,7 +13,7 @@ class UpdateAreasRequest extends FormRequest
      */
     public function authorize()
     {
-        return true;
+       return \Gate::allows('area_edit');
     }
 
     /**

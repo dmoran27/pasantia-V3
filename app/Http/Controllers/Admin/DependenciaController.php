@@ -1,75 +1,89 @@
 <?php
 
 namespace App\Http\Controllers\Admin;
-use App\Dependencia;
+
 use App\Http\Controllers\Controller;
-use App\Http\Resources\Dependencia as DependenciaResource;
-use App\Http\Requests\Admin\StoreDependenciasRequest;
-use App\Http\Requests\Admin\UpdateDependenciasRequest;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Gate;
+use App\Http\Requests\Admin\MassDestroyUserRequest;
+use App\Http\Requests\Admin\StoreUsersRequest;
+use App\Http\Requests\Admin\UpdateUsersRequest;
+use App\General;
+use App\Role;
+use App\User;
+use App\Area;
 
-
-
-class DependenciasController extends Controller
+class UsersController extends Controller
 {
     public function index()
     {
-        return new DependenciaResource(Dependencia::with([])->get());
+        abort_unless(\Gate::allows('user_access'), 403);
 
+        $users = User::all();
+
+        return view('admin.users.index', compact('users'));
     }
 
-    public function show($id)
+    public function create()
     {
-        if (Gate::denies('dependencia_view')) {
-            return abort(401);
-        }
+        abort_unless(\Gate::allows('user_create'), 403);
 
-        $dependencia = Dependencia::with(['tipo'])->findOrFail($id);
-
-        $return new DependenciaResource($dependencia);
+        $roles = Role::all()->pluck('title', 'id');
+        $enumoption = General::getEnumValues('users','sexo') ;
+        return view('admin.users.create', compact('roles', 'enumoption'));
     }
 
-    public function store(StoreDependenciasRequest $request)
+    public function store(StoreUsersRequest $request)
     {
-        if (Gate::denies('dependencia_create')) {
-            return abort(401);
-        }
+        abort_unless(\Gate::allows('user_create'), 403);
 
-        $dependencia = Dependencia::create($request->all());
-        
-        
+        $user = User::create($request->all());
+        $user->roles()->sync($request->input('roles', []));
 
-        return (new DependenciaResource($dependencia))
-            ->response()
-            ->setStatusCode(201);
+        return redirect()->route('admin.users.index');
     }
 
-    public function update(UpdateDependenciasRequest $request, $id)
+    public function edit(User $user)
     {
-        if (Gate::denies('dependencia_edit')) {
-            return abort(401);
-        }
+        abort_unless(\Gate::allows('user_edit'), 403);
 
-        $dependencia = Dependencia::findOrFail($id);
-        $dependencia->update($request->all());
-        
-        
-        
+        $roles = Role::all()->pluck('title', 'id');
+        $areas = Area::all()->pluck('nombre', 'id');
+        $enumoption = General::getEnumValues('users','sexo', 'areas') ;
+        $user->load('roles','area');
 
-        return (new DependenciaResource($dependencia))
-            ->response()
-            ->setStatusCode(202);
+        return view('admin.users.edit', compact('roles','enumoption', 'areas', 'user'));
     }
 
-    public function destroy($id)
+    public function update(UpdateUsersRequest $request, User $user)
     {
-        if (Gate::denies('dependencia_delete')) {
-            return abort(401);
-        }
+        abort_unless(\Gate::allows('user_edit'), 403);
 
-        $dependencia = Dependencia::findOrFail($id);
-        $dependencia->delete();
+        $user->update($request->all());
+        $user->roles()->sync($request->input('roles', []));
+
+        return redirect()->route('admin.users.index');
+    }
+
+    public function show(User $user)
+    {
+        abort_unless(\Gate::allows('user_show'), 403);
+
+        $user->load('roles');
+
+        return view('admin.users.show', compact('user'));
+    }
+
+    public function destroy(User $user)
+    {
+        abort_unless(\Gate::allows('user_delete'), 403);
+
+        $user->delete();
+
+        return back();
+    }
+
+    public function massDestroy(MassDestroyUserRequest $request)
+    {
+        User::whereIn('id', request('ids'))->delete();
 
         return response(null, 204);
     }

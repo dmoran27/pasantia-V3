@@ -1,10 +1,15 @@
 <?php
 
 return [
-    'password'       => 'Passwords must be at least six characters and match the confirmation.',
-    'reset'          => 'Your password has been reset!',
-    'sent'           => 'We have e-mailed your password reset link!',
-    'token'          => 'This password reset token is invalid.',
+    'password' => 'La contraseña debe tener al menos ocho caracteres y coincidir con la confirmación.',
+    'reset' => '¡Su contraseña ha sido restablecida!',
+    'sent' => '¡Recordatorio de contraseña enviado!',
+    'token' => 'Este token de restablecimiento de contraseña es inválido.',
+    'user' => 'No se ha encontrado un usuario con esa dirección de correo.',
+    'updated'        => 'Su clave fue cambiada con exito!',
+    'site_title'     => 'ORTSI',
+
+    /*
     'user'           => [
         'title'          => 'Users',
         'title_singular' => 'User',
@@ -31,8 +36,7 @@ return [
             'deleted_at_helper'        => '',
         ],
     ],
-    'updated'        => 'Your password has been changed!',
-    'site_title'     => 'Laravel + AdminLTE3',
+    
     'userManagement' => [
         'title'          => 'User Management',
         'title_singular' => 'User Management',
@@ -71,5 +75,5 @@ return [
             'deleted_at'         => 'Deleted at',
             'deleted_at_helper'  => '',
         ],
-    ],
+    ],*/
 ];

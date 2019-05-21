@@ -13,7 +13,7 @@ class UpdateEquipoesRequest extends FormRequest
      */
     public function authorize()
     {
-        return true;
+       return \Gate::allows('equipo_edit'); return true;
     }
 
     /**

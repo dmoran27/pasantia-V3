@@ -1,9 +1,13 @@
 <?php
 
 return [
-    'failed'         => 'These credentials do not match our records.',
-    'throttle'       => 'Too many login attempts. Please try again in :seconds seconds.',
-    'site_title'     => 'Laravel + AdminLTE3',
+    
+    'site_title'     => 'ORTSI',
+    'failed' => 'Estas credenciales no coinciden con nuestros registros.',
+    'throttle' => 'Demasiados intentos fallidos en muy poco tiempo. Por favor intente de nuevo en :seconds segundos.',
+
+    
+/*
     'userManagement' => [
         'title'          => 'User Management',
         'title_singular' => 'User Management',
@@ -67,6 +71,6 @@ return [
             'updated_at_helper'        => '',
             'deleted_at'               => 'Deleted at',
             'deleted_at_helper'        => '',
-        ],
-    ],
+        ],/
+    ],*/
 ];

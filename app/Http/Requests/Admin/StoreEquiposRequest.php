@@ -13,7 +13,7 @@ class StoreEquiposRequest extends FormRequest
      */
     public function authorize()
     {
-        return true;
+        return abort_if(Gate::denies('equipo_create'), 403, '403 Forbidden') ?? true;
     }
 
     /**

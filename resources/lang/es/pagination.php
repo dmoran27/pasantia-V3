@@ -1,9 +1,11 @@
 <?php
 
 return [
-    'previous'       => '&laquo; Previous',
-    'next'           => 'Next &raquo;',
-    'site_title'     => 'Laravel + AdminLTE3',
+    'previous' => '&laquo; Anterior',
+    'next'     => 'Siguiente &raquo;',
+    'site_title'     => 'ORTSI',
+
+    /*
     'userManagement' => [
         'title'          => 'User Management',
         'title_singular' => 'User Management',
@@ -68,5 +70,5 @@ return [
             'deleted_at'               => 'Deleted at',
             'deleted_at_helper'        => '',
         ],
-    ],
+    ],*/
 ];

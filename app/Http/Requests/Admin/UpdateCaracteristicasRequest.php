@@ -12,8 +12,7 @@ class UpdateCaracteristicasRequest extends FormRequest
      * @return bool
      */
     public function authorize()
-    {
-        return true;
+    {return \Gate::allows('caracteristica_edit');
     }
 
     /**
