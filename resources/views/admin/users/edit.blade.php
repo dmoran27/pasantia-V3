@@ -19,9 +19,6 @@
                         {{ $errors->first('nombre') }}
                     </p>
                 @endif
-                <p class="helper-block">
-                    {{ trans('global.user.fields.name_helper') }}
-                </p>
             </div>
             <div class="form-group {{ $errors->has('apellido') ? 'has-error' : '' }}">
                 <label for="apellido">{{ trans('global.user.fields.apellido') }}*</label>
@@ -31,9 +28,6 @@
                         {{ $errors->first('apellido') }}
                     </p>
                 @endif
-                <p class="helper-block">
-                    {{ trans('global.user.fields.name_helper') }}
-                </p>
             </div>
             <div class="form-group {{ $errors->has('cedula') ? 'has-error' : '' }}">
                 <label for="cedula">{{ trans('global.user.fields.cedula') }}*</label>
@@ -43,9 +37,6 @@
                         {{ $errors->first('cedula') }}
                     </p>
                 @endif
-                <p class="helper-block">
-                    {{ trans('global.user.fields.name_helper') }}
-                </p>
             </div>
             <div class="form-group {{ $errors->has('telefono') ? 'has-error' : '' }}">
                 <label for="telefono">{{ trans('global.user.fields.telefono') }}*</label>
@@ -56,43 +47,39 @@
                                 <input type="text"  id="telefono" class="form-control{{ $errors->has('telefono') ? ' is-invalid' : '' }} data-inputmask="&quot;mask&quot;: &quot;(999) 999-9999&quot;" data-mask="" name="telefono" value="{{ old('telefono', isset($user) ? $user->telefono : '') }}">
                               </div>
                               <!-- /.input group -->
- @if($errors->has('telefono'))
+                    @if($errors->has('telefono'))
                     <p class="help-block">
                         {{ $errors->first('telefono') }}
                     </p>
                 @endif
-                <p class="helper-block">
-                    {{ trans('global.user.fields.name_helper') }}
-                </p>
-
-                            </div>
+            </div>
             
            <div class="form-group {{ $errors->has('sexo')}}">
-                            <label for="sexo" class=" col-form-label text-md-right">{{ trans('global.user.fields.sexo') }}*</label>
+                <label for="sexo" class=" col-form-label text-md-right">{{ trans('global.user.fields.sexo') }}*</label>
 
-                            <div class="">
-                               
-                                <select class="form-control{{ $errors->has('sexo') ? ' is-invalid' : '' }} select2 select2-hidden-accessible" name="sexo" style="width: 100%;" tabindex="-1" aria-hidden="true">
-                                     @foreach($enumoption as $sexo)
-                                        <option value="{{$sexo}}" @if($sexo === $user->sexo) selected @else '' @endif >{{$sexo}}</option>
-                                    @endforeach
-                                  
-                                  </select>
-                            </div>
+                <div class="">
+                   
+                    <select class="form-control{{ $errors->has('sexo') ? ' is-invalid' : '' }} select2 select2-hidden-accessible" name="sexo" style="width: 100%;" tabindex="-1" aria-hidden="true">
+                         @foreach($enumoption as $sexo)
+                            <option value="{{$sexo}}" @if($sexo === $user->sexo) selected @else '' @endif >{{$sexo}}</option>
+                        @endforeach
+                      
+                      </select>
+                </div>
             </div>
             <div class="form-group{{ $errors->has('area')}}">
-                            <label for="area" class=" col-form-label text-md-right">{{ trans('global.user.fields.area') }}*</label>
+                <label for="area" class=" col-form-label text-md-right">{{ trans('global.user.fields.area') }}*</label>
 
-                            <div class="">
-                               
-                                <select class="form-control{{ $errors->has('area') ? ' is-invalid' : '' }} select2 select2-hidden-accessible" name="area_id" style="width: 100%;" tabindex="-1" aria-hidden="true">
-                                    @foreach($areas as $area)
-                                      <option value="{{ $area}}" @if($area=== $user->area_id) selected @else '' @endif >{{$area}}</option>
-                                  @endforeach
-                                </select>
+                <div class="">
+                   
+                    <select class="form-control{{ $errors->has('area') ? ' is-invalid' : '' }} select2 select2-hidden-accessible" name="area_id" style="width: 100%;" tabindex="-1" aria-hidden="true">
+                        @foreach($areas as $area)
+                          <option value="{{ $area}}" @if($area=== $user->area_id) selected @else '' @endif >{{$area}}</option>
+                      @endforeach
+                    </select>
 
-                            </div>
-                        </div>
+                </div>
+            </div>
                            
             <div class="form-group row {{ $errors->has('email') ? 'has-error' : '' }}">
                 <label for="email">{{ trans('global.user.fields.email') }}*</label>
@@ -102,9 +89,6 @@
                         {{ $errors->first('email') }}
                     </p>
                 @endif
-                <p class="helper-block">
-                    {{ trans('global.user.fields.email_helper') }}
-                </p>
             </div>
 
             <div class="form-group {{ $errors->has('password') ? 'has-error' : '' }}">
@@ -118,9 +102,6 @@
                         {{ $errors->first('password') }}
                     </p>
                 @endif
-                <p class="helper-block">
-                    {{ trans('global.user.fields.password_helper') }}
-                </p>
             </div>
             <div class="form-group {{ $errors->has('roles') ? 'has-error' : '' }}">
                 <label for="roles">{{ trans('global.user.fields.roles') }}*
@@ -138,9 +119,7 @@
                         {{ $errors->first('roles') }}
                     </p>
                 @endif
-                <p class="helper-block">
-                    {{ trans('global.user.fields.roles_helper') }}
-                </p>
+                
             </div>
             <div>
                 <input class="btn btn-danger" type="submit" value="{{ trans('global.save') }}">
