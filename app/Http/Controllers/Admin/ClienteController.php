@@ -28,7 +28,7 @@ class UsersController extends Controller
 
         $roles = Role::all()->pluck('title', 'id');
         $enumoption = General::getEnumValues('users','sexo') ;
-        return view('admin.users.create', compact('roles', 'enumoption'));
+        return view('admin.users.create', compact('roles', 'enumoption', 'areas'));
     }
 
     public function store(StoreUsersRequest $request)
