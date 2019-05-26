@@ -44,17 +44,16 @@ class User extends Authenticatable
     public static function storeValidation($request)
     {
         return [
-                       'email' => 'email|max:191|required|unique:users,email',
+            'email' => 'email|max:191|required|unique:users,email',
             'password' => 'required|string|min:6',
-            'role' => 'array|required',
             'role.*' => 'integer|exists:roles,id|max:4294967295|required',
             'remember_token' => 'max:191|nullable',
             'nombre' => 'required|string|max:255',
             'apellido' => 'required|string|max:255',
             'cedula' => 'required|string|unique:users|max:10',
             'telefono' => 'required|string|max:50',
-            'sexo' => 'required|string|max:10',
-            'area_id' => 'required|string|max:255',
+            'sexo' => 'required',
+            'area_id' => 'required|exists:areas,id',
         ];
     }
 //validacion al actualizar
@@ -64,7 +63,6 @@ class User extends Authenticatable
             
             'email' => 'email|max:191|required|unique:users,email,'.$request->route('user'),
             'password' => '',
-            'role' => 'array|required',
             'role.*' => 'integer|exists:roles,id|max:4294967295|required',
             'remember_token' => 'max:191|nullable',
             'nombre' => 'required|string|max:255',
@@ -72,7 +70,7 @@ class User extends Authenticatable
             'cedula' => 'required|string|unique:users|max:10',
             'telefono' => 'required|string|max:50',
             'sexo' => 'required|string|max:10',
-            'area_id' => 'required|string|max:255',
+            'area_id' => 'required|exists:areas,id',
             'password' => 'required|min:6',
         ];
     }
@@ -123,8 +121,8 @@ public static function boot()
 
     //relaciones entre las tablas de la base de dato
 
-    public function area(){
-        return $this->belongsTo(Area::class);
+    public function areas(){
+        return $this->belongsTo(Area::class, 'area_id');
     }
      public function tickets()
     {

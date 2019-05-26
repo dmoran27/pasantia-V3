@@ -3,88 +3,83 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Admin\MassDestroyUserRequest;
-use App\Http\Requests\Admin\StoreUsersRequest;
-use App\Http\Requests\Admin\UpdateUsersRequest;
+use App\Http\Requests\Admin\MassDestroyDependenciaRequest;
+use App\Http\Requests\Admin\StoreDepenciasRequest;
+use App\Http\Requests\Admin\UpdateDepenciasRequest;
 use App\General;
 use App\Role;
-use App\User;
-use App\Area;
+use App\Cliente;
+use App\Dependencia;
 
-class UsersController extends Controller
-{
-    public function index()
-    {
-        abort_unless(\Gate::allows('user_access'), 403);
+class DependenciaController extends Controller{ 
 
-        $users = User::all();
-
-        return view('admin.users.index', compact('users'));
+    public function index(){        
+        abort_unless(\Gate::allows('dependencia_access'), 403);//Comparar si tiene permisos
+        $dependencias = Dependencia::all();
+        return view('admin.dependencias.index', compact('dependencias'));
     }
 
-    public function create()
-    {
-        abort_unless(\Gate::allows('user_create'), 403);
-
-        $roles = Role::all()->pluck('title', 'id');
-        $enumoption = General::getEnumValues('users','sexo') ;
-        return view('admin.users.create', compact('roles', 'enumoption'));
+     public function show(Cliente $dependencia){
+        abort_unless(\Gate::allows('dependencia_show'), 403);
+        return view('admin.dependencias.show', compact('dependencia'));
     }
 
-    public function store(StoreUsersRequest $request)
-    {
-        abort_unless(\Gate::allows('user_create'), 403);
 
-        $user = User::create($request->all());
-        $user->roles()->sync($request->input('roles', []));
-
-        return redirect()->route('admin.users.index');
+    public function create(){
+        $edificios = Edificio::all()->pluck('nombre', 'id');
+        abort_unless(\Gate::allows('dependencia_create'), 403);
+        return view('admin.dependencias.create', compact('edificios'));
     }
 
-    public function edit(User $user)
-    {
-        abort_unless(\Gate::allows('user_edit'), 403);
-
-        $roles = Role::all()->pluck('title', 'id');
-        $areas = Area::all()->pluck('nombre', 'id');
-        $enumoption = General::getEnumValues('users','sexo', 'areas') ;
-        $user->load('roles','area');
-
-        return view('admin.users.edit', compact('roles','enumoption', 'areas', 'user'));
+    public function store(StoreDepenciasRequest $request){
+        abort_unless(\Gate::allows('dependencia_create'), 403);
+        $dependencia = Dependencia::create($request->all());
+        $dependencia->edificios()->sync($request->input('edificios', []));
+        $dependencias = Dependencia::all();
+        $notificacion = array(
+            'message' => 'Clientes agregados con exito.', 
+            'alert-type' => 'success'
+        );
+        return view('admin.dependencias.index', compact('dependencias', 'notificacion'));
     }
 
-    public function update(UpdateUsersRequest $request, User $user)
-    {
-        abort_unless(\Gate::allows('user_edit'), 403);
-
-        $user->update($request->all());
-        $user->roles()->sync($request->input('roles', []));
-
-        return redirect()->route('admin.users.index');
+    public function edit(Cliente $dependencia){
+        $dependencias = Dependencia::all()->pluck('nombre', 'id');
+        $dependencia->load('edificios','dependencias');
+        abort_unless(\Gate::allows('dependencia_edit'), 403);      
+        return view('admin.dependencias.edit', compact('edificios','enumoption', 'dependencias', 'cliente'));
     }
 
-    public function show(User $user)
-    {
-        abort_unless(\Gate::allows('user_show'), 403);
-
-        $user->load('roles');
-
-        return view('admin.users.show', compact('user'));
+    public function update(UpdateDepenciasRequest $request, Cliente $dependencia){
+        abort_unless(\Gate::allows('dependencia_edit'), 403);    
+        $dependencia->update($request->all());
+        $dependencia->roles()->sync($request->input('roles', []));
+        $dependencias = Dependencia::all();
+        $notificacion = array(
+            'message' => 'Usuario creado con exito.', 
+            'alert-type' => 'success'
+        );
+        return view('admin.dependencias.index', compact('dependencias', 'notificacion'));
     }
 
-    public function destroy(User $user)
-    {
-        abort_unless(\Gate::allows('user_delete'), 403);
+   
 
-        $user->delete();
-
-        return back();
+    public function destroy(Cliente $dependencia){
+        abort_unless(\Gate::allows('dependencia_delete'), 403);
+        $dependencia->delete();       
+        $notificacion = array(
+            'message' => 'Usuario eliminado con exito.', 
+            'alert-type' => 'Danger'
+        );
+        return redirect()->back()->with($notificacion);
     }
 
-    public function massDestroy(MassDestroyUserRequest $request)
-    {
-        User::whereIn('id', request('ids'))->delete();
-
-        return response(null, 204);
+    public function massDestroy(MassDestroyDependenciaRequest $request){
+        Dependencia::whereIn('id', request('ids'))->delete();
+        $notificacion = array(
+            'message' => 'Usuarios Eliminados con exito.', 
+            'alert-type' => 'Danger'
+        );
+        return redirect()->back()->with($notificacion);
     }
 }

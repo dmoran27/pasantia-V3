@@ -11,18 +11,11 @@ use App\Role;
 use App\User;
 use App\Area;
 
-class UsersController extends Controller
-{
+class UsersController extends Controller{ 
 
-    $users = User::all();
-    $roles = Role::all()->pluck('title', 'id');
-    $areas = Area::all()->pluck('nombre', 'id');
-    $enumoption = General::getEnumValues('users','sexo');
-    $user->load('roles','areas');
-
-    public function index(){
-        
+    public function index(){        
         abort_unless(\Gate::allows('user_access'), 403);//Comparar si tiene permisos
+        $users = User::all();
         return view('admin.users.index', compact('users'));
     }
 
@@ -30,7 +23,11 @@ class UsersController extends Controller
         abort_unless(\Gate::allows('user_show'), 403);
         return view('admin.users.show', compact('user'));
     }
+
     public function create(){
+        $roles = Role::all()->pluck('title', 'id');
+        $areas = Area::all();
+        $enumoption = General::getEnumValues('users','sexo');       
         abort_unless(\Gate::allows('user_create'), 403);
         return view('admin.users.create', compact('roles', 'enumoption', 'areas'));
     }
@@ -39,6 +36,8 @@ class UsersController extends Controller
         abort_unless(\Gate::allows('user_create'), 403);
         $user = User::create($request->all());
         $user->roles()->sync($request->input('roles', []));
+        $users = User::all();
+        $user->load('roles');
         $notificacion = array(
             'message' => 'Usuario creado con exito.', 
             'alert-type' => 'success'
@@ -47,14 +46,20 @@ class UsersController extends Controller
     }
 
     public function edit(User $user){
+        $roles = Role::all()->pluck('title', 'id');
+        $areas = Area::all();
+        $enumoption = General::getEnumValues('users','sexo');
+        $user->load('roles');
         abort_unless(\Gate::allows('user_edit'), 403);      
         return view('admin.users.edit', compact('roles','enumoption', 'areas', 'user'));
     }
 
     public function update(UpdateUsersRequest $request, User $user){
-        abort_unless(\Gate::allows('user_edit'), 403);
+        abort_unless(\Gate::allows('user_edit'), 403);    
         $user->update($request->all());
         $user->roles()->sync($request->input('roles', []));
+        $user->load('roles');        
+        $users = User::all();
         $notificacion = array(
             'message' => 'Usuario creado con exito.', 
             'alert-type' => 'success'

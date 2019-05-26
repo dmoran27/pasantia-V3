@@ -57,18 +57,20 @@
            <div class="form-group {{ $errors->has('area')}}">
                 <label for="area" class=" col-form-label text-md-right">{{ trans('global.user.fields.area') }}*</label>
                 <div class="">   
-                    <select class="form-control{{ $errors->has('area') ? ' is-invalid' : '' }} select2 select2-hidden-accessible" name="area" style="width: 100%;" tabindex="-1" aria-hidden="true">
+                 
+                    <select class="form-control{{ $errors->has('area') ? ' is-invalid' : '' }} " name="area_id" style="width: 100%;" tabindex="-1" aria-hidden="true">
                          @foreach($areas as $area)
-                            <option value="{{$area}}">{{$area}}</option>
+                            <option value="{{$area->id}}">{{$area->nombre}}</option>
                         @endforeach
                       
                       </select>
+                    
                 </div>
             </div> 
            <div class="form-group {{ $errors->has('sexo')}}">
                 <label for="sexo" class=" col-form-label text-md-right">{{ trans('global.user.fields.sexo') }}*</label>
                 <div class="">   
-                    <select class="form-control{{ $errors->has('sexo') ? ' is-invalid' : '' }} select2 select2-hidden-accessible" name="sexo" style="width: 100%;" tabindex="-1" aria-hidden="true">
+                    <select class="form-control{{ $errors->has('sexo') ? ' is-invalid' : '' }}" name="sexo" style="width: 100%;" tabindex="-1" aria-hidden="true">
                          @foreach($enumoption as $sexo)
                             <option value="{{$sexo}}">{{$sexo}}</option>
                         @endforeach
@@ -110,6 +112,12 @@
                     <p class="help-block">
                         {{ $errors->first('roles') }}
                     </p>
+                @endif
+                @if($errors)
+                 @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+                    
                 @endif
             </div>
             <div>

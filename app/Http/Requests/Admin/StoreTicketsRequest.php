@@ -1,6 +1,6 @@
 <?php
 namespace App\Http\Requests\Admin;
-
+use Gate;
 use App\Ticket;
 use Illuminate\Foundation\Http\FormRequest;
 

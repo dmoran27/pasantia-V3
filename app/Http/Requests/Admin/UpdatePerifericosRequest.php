@@ -1,6 +1,6 @@
 <?php
 namespace App\Http\Requests\Admin;
-
+use Gate;
 use App\Periferico;
 use Illuminate\Foundation\Http\FormRequest;
 

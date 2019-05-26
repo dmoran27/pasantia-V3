@@ -129,10 +129,9 @@ return [
     |
     */
     'attributes' => [],
-];
     'site_title'           => 'ORTSI',
 
-    /*
+ 
     'userManagement'       => [
         'title'          => 'User Management',
         'title_singular' => 'User Management',
@@ -197,5 +196,5 @@ return [
             'deleted_at'               => 'Deleted at',
             'deleted_at_helper'        => '',
         ],
-    ],*/
+    ],
 ];

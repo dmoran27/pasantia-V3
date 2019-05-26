@@ -1,6 +1,6 @@
 <?php
 namespace App\Http\Requests\Admin;
-
+use Gate;
 use App\User;
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -13,7 +13,7 @@ class UpdateUsersRequest extends FormRequest
      */
     public function authorize()
     {
-        return true;
+         return abort_if(Gate::denies('user_edit'), 403, '403 Forbidden') ?? true;
     }
 
     /**

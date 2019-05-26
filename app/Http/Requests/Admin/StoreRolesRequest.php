@@ -1,9 +1,9 @@
 <?php
 namespace App\Http\Requests\Admin;
-use Illuminate\Support\Facades\Gate;
+
 use App\Role;
 use Illuminate\Foundation\Http\FormRequest;
-
+use Gate;
 class StoreRolesRequest extends FormRequest
 {
     /**
