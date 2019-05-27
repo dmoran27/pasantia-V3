@@ -11,7 +11,28 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
 
     Route::get('/', 'HomeController@index')->name('home');
 
-     
+    /********************************************************Inventario*/
+    Route::delete('softwares/destroy', 'SoftwareController@massDestroy')->name('softwares.massDestroy');
+
+     Route::resource('softwares', 'SoftwareController');
+    
+     Route::delete('perifericos/destroy', 'PerifericoController@massDestroy')->name('perifericos.massDestroy');
+
+     Route::resource('perifericos', 'PerifericoController');
+    
+     Route::delete('caracteristicas/destroy', 'CaracteristicaController@massDestroy')->name('caracteristicas.massDestroy');
+
+     Route::resource('caracteristicas', 'CaracteristicaController');
+    
+     Route::delete('equipos/destroy', 'EquipoController@massDestroy')->name('equipos.massDestroy');
+
+     Route::resource('equipos', 'EquipoController');
+    
+     Route::delete('tipos/destroy', 'TipoController@massDestroy')->name('tipos.massDestroy');
+
+     Route::resource('tipos', 'TipoController');
+
+     /********************************************Gestion de usuarios*/
     Route::get('user-actions', 'UserActionsController@index')->name('user-actions.index');
 
     Route::delete('permissions/destroy', 'PermissionsController@massDestroy')->name('permissions.massDestroy');
@@ -27,14 +48,23 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::resource('users', 'UsersController');
 
 
-
-    Route::delete('products/destroy', 'ProductsController@massDestroy')->name('products.massDestroy');
-
-    Route::resource('products', 'ProductsController');
-
+    /***********************************************Clientes*/
 	Route::delete('clientes/destroy', 'ClienteController@massDestroy')->name('clientes.massDestroy');
 
     Route::resource('clientes', 'ClienteController');
+
+    /******************************************************Configuraciones Generales*/
+    Route::delete('dependencias/destroy', 'DependenciaController@massDestroy')->name('dependencias.massDestroy');
+
+     Route::resource('dependencias', 'DependenciaController');
+
+     Route::delete('edificios/destroy', 'EdificioController@massDestroy')->name('edificios.massDestroy');
+
+     Route::resource('edificios', 'EdificioController');
+
+     Route::delete('areas/destroy', 'DependenciaController@massDestroy')->name('areas.massDestroy');
+
+     Route::resource('areas', 'AreaController');
 	
    
 });

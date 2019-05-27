@@ -40,40 +40,6 @@ class User extends Authenticatable
         'deleted_at',
         'email_verified_at',
     ];
-//validacion 
-    public static function storeValidation($request)
-    {
-        return [
-            'email' => 'email|max:191|required|unique:users,email',
-            'password' => 'required|string|min:6',
-            'role.*' => 'integer|exists:roles,id|max:4294967295|required',
-            'remember_token' => 'max:191|nullable',
-            'nombre' => 'required|string|max:255',
-            'apellido' => 'required|string|max:255',
-            'cedula' => 'required|string|unique:users|max:10',
-            'telefono' => 'required|string|max:50',
-            'sexo' => 'required',
-            'area_id' => 'required|exists:areas,id',
-        ];
-    }
-//validacion al actualizar
-    public static function updateValidation($request)
-    {
-        return [
-            
-            'email' => 'email|max:191|required|unique:users,email,'.$request->route('user'),
-            'password' => '',
-            'role.*' => 'integer|exists:roles,id|max:4294967295|required',
-            'remember_token' => 'max:191|nullable',
-            'nombre' => 'required|string|max:255',
-            'apellido' => 'required|string|max:255',
-            'cedula' => 'required|string|unique:users|max:10',
-            'telefono' => 'required|string|max:50',
-            'sexo' => 'required|string|max:10',
-            'area_id' => 'required|exists:areas,id',
-            'password' => 'required|min:6',
-        ];
-    }
 
 //observar cambios en la base de datos
 public static function boot()

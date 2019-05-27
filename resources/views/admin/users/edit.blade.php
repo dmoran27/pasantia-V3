@@ -13,12 +13,12 @@
 
             <div class="form-group {{ $errors->has('nombre') ? 'has-error' : '' }}">
                 <label for="nombre">{{ trans('global.user.fields.nombre') }}*</label>
-                <input type="text" id="nombre" name="nombre" class="form-control" value="{{ old('nombre') }}">
+                <input type="text" id="nombre" name="nombre" class="form-control" value="{{ old('nombre', isset($user) ? $user->nombre : '') }}">
                 @if($errors->has('nombre'))
                     <p class="help-block">
                         {{ $errors->first('nombre') }}
                     </p>
-                @endif                
+                @endif
             </div>
             <div class="form-group {{ $errors->has('apellido') ? 'has-error' : '' }}">
                 <label for="apellido">{{ trans('global.user.fields.apellido') }}*</label>

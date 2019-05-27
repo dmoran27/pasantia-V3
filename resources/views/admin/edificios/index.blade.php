@@ -1,17 +1,17 @@
 @extends('layouts.admin')
 @section('content')
-@can('user_create')
+@can('edificio_create')
     <div style="margin-bottom: 10px;" class="row">
         <div class="col-lg-12">
-            <a class="btn btn-success" href="{{ route("admin.areas.create") }}">
-                {{ trans('global.add') }} {{ trans('global.area.title_singular') }}
+            <a class="btn btn-success" href="{{ route("admin.edificios.create") }}">
+                {{ trans('global.add') }} {{ trans('global.edificio.title_singular') }}
             </a>
         </div>
     </div>
 @endcan
 <div class="card">
     <div class="card-header">
-        {{ trans('global.area.title_singular') }} {{ trans('global.list') }}
+        {{ trans('global.edificio.title_singular') }} {{ trans('global.list') }}
     </div>
 
     <div class="card-body">
@@ -26,21 +26,18 @@
                             #
                         </th>
                         <th>
-                            {{ trans('global.area.fields.nombre') }} 
-                        </th>
-                          <th>
-                            {{ trans('global.area.fields.descripcion') }} 
-                        </th>                      
+                            {{ trans('global.edificio.fields.nombre') }} 
+                        </th>                     
                         
                         <th>
-                            {{ trans('global.area.fields.acciones') }} 
+                            {{ trans('global.edificio.fields.acciones') }} 
                             &nbsp;
                         </th>
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach($areas as $key => $area )
-                        <tr data-entry-id="{{ $area->id }}">
+                    @foreach($edificios as $key => $edificio )
+                        <tr data-entry-id="{{ $edificio->id }}">
                             <td>
                            
                             </td>
@@ -48,25 +45,23 @@
                                   {{$loop->index+1}}
                             </td>
                             <td>
-                                {{ $area->nombre ?? '' }}
+                                {{ $edificio->nombre ?? '' }}
                             </td>
-                            <td>
-                                {{ $area->descripcion ?? '' }}
-                            </td>
+                           
                              
                             <td>
-                                 @can('user_show')
-                                    <a class="btn btn-xs btn-success" href="{{ route('admin.areas.show', $area->id) }}">
+                                 @can('edificio_show')
+                                    <a class="btn btn-xs btn-success" href="{{ route('admin.edificios.show', $edificio->id) }}">
                                         {{ trans('global.view') }}
                                     </a>
                                 @endcan
-                                @can('user_edit')
-                                    <a class="btn btn-xs btn-info" href="{{ route('admin.areas.edit', $area) }}">
+                                @can('edificio_edit')
+                                    <a class="btn btn-xs btn-info" href="{{ route('admin.edificios.edit', $edificio) }}">
                                         {{ trans('global.edit') }}
                                     </a>
                                 @endcan
-                                @can('user_delete')
-                                    <form action="{{ route('admin.areas.destroy', $area->id) }}" method="POST" onsubmit="return confirm('{{ trans('global.areYouSure') }}');" style="display: inline-block;">
+                                @can('edificio_delete')
+                                    <form action="{{ route('admin.edificios.destroy', $edificio->id) }}" method="POST" onsubmit="return confirm('{{ trans('global.areYouSure') }}');" style="display: inline-block;">
                                         <input type="hidden" name="_method" value="DELETE">
                                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                         <input type="submit" class="btn btn-xs btn-danger" value="{{ trans('global.delete') }}">
@@ -96,7 +91,7 @@
   let deleteButtonTrans = '{{ trans('global.datatables.delete') }}'
   let deleteButton = {
     text: deleteButtonTrans,
-    url: "{{ route('admin.areas.massDestroy') }}",
+    url: "{{ route('admin.edificios.massDestroy') }}",
     className: 'btn-danger',
     action: function (e, dt, node, config) {
       var ids = $.map(dt.rows({ selected: true }).nodes(), function (entry) {
@@ -120,7 +115,7 @@
     }
   }
   let dtButtons = $.extend(true, [], $.fn.dataTable.defaults.buttons)
-@can('user_delete')
+@can('edificio_delete')
   dtButtons.push(deleteButton)
 @endcan
 

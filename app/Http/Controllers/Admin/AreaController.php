@@ -2,63 +2,108 @@
 
 namespace App\Http\Controllers\Admin;
 
+use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\MassDestroyAreaRequest;
-use App\Http\Requests\Admin\StoreAreasRequest;
-use App\Http\Requests\Admin\UpdateAreasRequest;
+use Illuminate\Support\Facades\Validator;
+
 use App\Area;
 
-class AreaController extends Controller
-{
-    public function index()
-    {
-        abort_unless(\Gate::allows('area_access'), 403);
+class AreaController extends Controller{ 
+
+    public function index(){        
+        abort_unless(\Gate::allows('area_access'), 403);//Comparar si tiene permisos
         $areas = Area::all();
         return view('admin.areas.index', compact('areas'));
     }
 
-    public function create()
-    {
-        abort_unless(\Gate::allows('area_create'), 403);
-        return view('admin.areas.create');
-    }
-
-    public function store(StoreAreasRequest $request)
-    {
-        abort_unless(\Gate::allows('area_create'), 403);
-        $area = Area::create($request->all());
-        return redirect()->route('admin.areas.index');
-    }
-
-    public function edit(Area $area)
-    {
-        abort_unless(\Gate::allows('area_edit'), 403);
-        return view('admin.areas.edit', compact('areas'));
-    }
-
-    public function update(UpdateAreasRequest $request, Area $area)
-    {
-        abort_unless(\Gate::allows('area_edit'), 403);
-        $area->update($request->all());
-        return redirect()->route('admin.areas.index');
-    }
-
-    public function show(Area $area)
-    {
+     public function show(Area $area){
         abort_unless(\Gate::allows('area_show'), 403);
         return view('admin.areas.show', compact('area'));
     }
 
-    public function destroy(Area $area)
-    {
-        abort_unless(\Gate::allows('area_delete'), 403);
-        $area->delete();
-        return back();
+    public function create(){
+        $areas = Area::all();    
+        abort_unless(\Gate::allows('area_create'), 403);
+        return view('admin.areas.create', compact('areas'));
     }
 
-    public function massDestroy(MassDestroyAreaRequest $request)
-    {
+    public function store(Request $request){    
+       abort_unless(\Gate::allows('area_create'), 403);
+        $validator = Validator::make($request->all(), [
+            'nombre' => 'required|string|max:255',
+            'descripcion' => 'required|string|max:255445',
+         ]);
+        if ($validator->fails()) {
+            
+           return redirect()
+                        ->route('admin.areas.create')
+                        ->withErrors($validator)
+                        ->withInput();
+            }
+        
+        $area = Area::create($request->all());
+        $areas = Area::all();
+        $notificacion = array(
+            'message' => 'Area creada con exito.', 
+            'alert-type' => 'success'
+        );
+
+        return view('admin.areas.index', compact('areas', 'notificacion'));
+    }
+
+    public function edit(Area $area){
+        $areas = Area::all();
+        abort_unless(\Gate::allows('area_edit'), 403);      
+        return view('admin.areas.edit', compact('area'));
+    }
+
+    public function update(Request $request, Area $area){
+
+        abort_unless(\Gate::allows('area_edit'), 403);
+        $validator = Validator::make($request->all(), [
+            'nombre' => 'required|string|max:255|unique:areas,nombre,' .$area->id,
+            'descripcion' => 'required|string|max:255445',
+
+        ]);
+
+         if ($validator->fails()) {
+            
+           return redirect()
+                        ->route('admin.areas.edit', $area)
+                        ->withErrors($validator)
+                        ->withInput();
+            }
+      
+         Area::findOrFail($area->id)->update($request->all());
+        $area->update($request->all());
+        $areas = Area::all();
+        $notificacion = array(
+            'message' => 'Area creado con exito.', 
+            'alert-type' => 'success'
+        );
+        return view('admin.areas.index', compact('areas', 'notificacion'));
+
+    }
+
+   
+
+    public function destroy(Area $area){
+        abort_unless(\Gate::allows('area_delete'), 403);
+        $area->delete();       
+        $notificacion = array(
+            'message' => 'Area eliminado con exito.', 
+            'alert-type' => 'Danger'
+        );
+        return redirect()->back()->with($notificacion);
+    }
+
+    public function massDestroy(MassDestroyAreaRequest $request){
         Area::whereIn('id', request('ids'))->delete();
-        return response(null, 204);
+        $notificacion = array(
+            'message' => 'Areas Eliminados con exito.', 
+            'alert-type' => 'Danger'
+        );
+        return redirect()->back()->with($notificacion);
     }
 }

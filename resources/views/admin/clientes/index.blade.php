@@ -1,102 +1,168 @@
-
-
-
-@extends('layouts.app')
-
+@extends('layouts.admin')
 @section('content')
+@can('user_create')
+    <div style="margin-bottom: 10px;" class="row">
+        <div class="col-lg-12">
+            <a class="btn btn-success" href="{{ route("admin.clientes.create") }}">
+                {{ trans('global.add') }} {{ trans('global.cliente.title_singular') }}
+            </a>
+        </div>
+    </div>
+@endcan
+<div class="card">
+    <div class="card-header">
+        {{ trans('global.cliente.title_singular') }} {{ trans('global.list') }}
+    </div>
 
-<section class="content login">
-
-		
-
-      <div class="row">
-        <div class="col-xs-12">
-         
-          <div class="box">
-            <div class="box-header">
-              <h3 class="box-title">Tabla de Clientes</h3>
-            </div>
-            <!-- /.box-header -->
-            <div class="box-body">
-              <table id="" class="dataTable1 table table-bordered table-hover">
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class=" table table-bordered table-striped table-hover datatable">
                 <thead>
-                <tr>
-                <th>id</th>
-				<th>Nombre</th>
-				<th>Cedula</th>
-				<th>Tipo</th>
-				<th>Departamento</th>
-				<th>Acciones</th>
-                </tr>
+                    <tr>
+                        <th width="10">
+                            
+                        </th>
+                         <th width="10">
+                            #
+                        </th>
+                        <th>
+                            {{ trans('global.cliente.fields.nombre') }} 
+                        </th>
+                          <th>
+                            {{ trans('global.cliente.fields.apellido') }} 
+                        </th>
+                       
+                        <th>
+                            {{ trans('global.cliente.fields.cedula') }}
+                        </th>
+                        <th>
+                            {{ trans('global.cliente.fields.telefono') }}
+                        </th>
+                        <th>
+                            {{ trans('global.cliente.fields.sexo') }}
+                        </th>
+                        <th>
+                            {{ trans('global.cliente.fields.email') }}
+                        </th>
+                        <th>
+                            {{ trans('global.cliente.fields.tipo') }}
+                        </th>
+                        <th>
+                            {{ trans('global.cliente.fields.dependencia_id') }}
+                        </th>
+                        <th>
+                            {{ trans('global.cliente.fields.acciones') }} 
+                            &nbsp;
+                        </th>
+                    </tr>
                 </thead>
                 <tbody>
-                		@foreach($clientes as $cliente)
-               <tr>
-					<td>{{$cliente->id}}</td>
-@can('clientes.create')
-					<td><a href="{{route('clientes.show', $cliente->id)}}">{{$cliente->nombre}} {{$cliente->apellido}}</a></td>
-			@endcan		
-					<td>{{$cliente->cedula}}</td>
-					<td>{{$cliente->tipo}}</td>
-					<td>{{$cliente->departamento_id}}</td>
-					<td>
-						<div class="">	
+                    @foreach($clientes as $key => $cliente )
+                        <tr data-entry-id="{{ $cliente->id }}">
+                            <td>
+                           
+                            </td>
+                            <td>
+                                  {{$loop->index+1}}
+                            </td>
+                            <td>
+                                {{ $cliente->nombre ?? '' }}
+                            </td>
+                            <td>
+                                {{ $cliente->apellido ?? '' }}
+                            </td>
+                             <td>
+                                {{ $cliente->cedula ?? '' }}
+                            </td>
+                             <td>
+                                {{ $cliente->telefono ?? '' }}
+                            </td>
+                             <td>
+                                {{ $cliente->sexo ?? '' }}
+                            </td>
+                             <td>
+                                {{ $cliente->email ?? '' }}
+                            </td>
+                             <td>
+                                {{ $cliente->tipo ?? '' }}
+                            </td>
+                            
+                            <td>
+                               {{ $cliente->dependencia->nombre }}
+                                
+                            </td>
+                            <td>
+                                 @can('user_show')
+                                    <a class="btn btn-xs btn-success" href="{{ route('admin.clientes.show', $cliente->id) }}">
+                                        {{ trans('global.view') }}
+                                    </a>
+                                @endcan
+                                @can('user_edit')
+                                    <a class="btn btn-xs btn-info" href="{{ route('admin.clientes.edit', $cliente) }}">
+                                        {{ trans('global.edit') }}
+                                    </a>
+                                @endcan
+                                @can('user_delete')
+                                    <form action="{{ route('admin.clientes.destroy', $cliente->id) }}" method="POST" onsubmit="return confirm('{{ trans('global.areYouSure') }}');" style="display: inline-block;">
+                                        <input type="hidden" name="_method" value="DELETE">
+                                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                                        <input type="submit" class="btn btn-xs btn-danger" value="{{ trans('global.delete') }}">
+                                    </form>
+                                @endcan
+                            </td>
 
-	  							
-	  							
-	  							@can('clientes.create')
-	  							<div class="col-xs-2 ">
-	  								<a href="{{route('clientes.edit', $cliente->id)}}" class="btn btn-success "><i class="fa fa-edit"></i></a>
-	  							</div>				
-								@endcan
-	  							@can('clientes.create')							
-								<div class="col-xs-2  ">
-									<form method="POST"  action="{{route('clientes.destroy', $cliente->id)}}">
-									@csrf
-									{!!method_field('DELETE')!!}
-
-								 <button type="submit" class="btn btn-danger">Eliminar</button>
-								</form>
-							</div>
-								</div>
-								@endcan
-							</div>
-					</td>
-				</tr>
-				
-			
-                	@endforeach
+                        </tr>
+                    @endforeach
                 </tbody>
-                <tfoot>
-                <tr>
-                <th>id</th>
-				<th>Nombre</th>
-				<th>Cedula</th>
-				<th>Tipo</th>
-				<th>Departamento</th>
-				<th>Acciones</th>
-                </tr>
-                </tfoot>
-              </table>
-            </div>
-            <!-- /.box-body -->
-          </div>
-          <!-- /.box -->
+            </table>
         </div>
-        <!-- /.col -->
-      </div>
-      <!-- /.row -->
-      <div class="row d-flex justify-content-end ">
-			  @can('clientes.create')
-			<div class="col-md-2 ">
-				<a href="{{route('clientes.create')}}" class="btn btn-info m-2">Agregar Nuevo Cliente</a>
-			</div>
-			  @endcan
-			
-			
-		</div>
+    </div>
+</div>
+@endsection
+@section('scripts')
+@parent
+<script>
+ $(function () {
 
-    </section>
+    
+ });
 
 
+
+    $(function () {
+  let deleteButtonTrans = '{{ trans('global.datatables.delete') }}'
+  let deleteButton = {
+    text: deleteButtonTrans,
+    url: "{{ route('admin.clientes.massDestroy') }}",
+    className: 'btn-danger',
+    action: function (e, dt, node, config) {
+      var ids = $.map(dt.rows({ selected: true }).nodes(), function (entry) {
+          return $(entry).data('entry-id')
+      });
+
+      if (ids.length === 0) {
+        alert('{{ trans('global.datatables.zero_selected') }}')
+
+        return
+      }
+
+      if (confirm('{{ trans('global.areYouSure') }}')) {
+        $.ajax({
+          headers: {'x-csrf-token': _token},
+          method: 'POST',
+          url: config.url,
+          data: { ids: ids, _method: 'DELETE' }})
+          .done(function () { location.reload() })
+      }
+    }
+  }
+  let dtButtons = $.extend(true, [], $.fn.dataTable.defaults.buttons)
+@can('user_delete')
+  dtButtons.push(deleteButton)
+@endcan
+
+  $('.datatable:not(.ajaxTable)').DataTable({ buttons: dtButtons })
+});
+
+</script>
 @endsection

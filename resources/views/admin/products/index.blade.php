@@ -31,9 +31,7 @@
                         <th>
                             {{ trans('global.product.fields.price') }}
                         </th>
-                        <th>
-                            &nbsp;
-                        </th>
+                        
                     </tr>
                 </thead>
                 <tbody>
@@ -51,26 +49,6 @@
                             <td>
                                 {{ $product->price ?? '' }}
                             </td>
-                            <td>
-                                @can('product_show')
-                                    <a class="btn btn-xs btn-primary" href="{{ route('admin.products.show', $product->id) }}">
-                                        {{ trans('global.view') }}
-                                    </a>
-                                @endcan
-                                @can('product_edit')
-                                    <a class="btn btn-xs btn-info" href="{{ route('admin.products.edit', $product->id) }}">
-                                        {{ trans('global.edit') }}
-                                    </a>
-                                @endcan
-                                @can('product_delete')
-                                    <form action="{{ route('admin.products.destroy', $product->id) }}" method="POST" onsubmit="return confirm('{{ trans('global.areYouSure') }}');" style="display: inline-block;">
-                                        <input type="hidden" name="_method" value="DELETE">
-                                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                                        <input type="submit" class="btn btn-xs btn-danger" value="{{ trans('global.delete') }}">
-                                    </form>
-                                @endcan
-                            </td>
-
                         </tr>
                     @endforeach
                 </tbody>

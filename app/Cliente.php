@@ -36,36 +36,6 @@ class Cliente extends Model
 
         Cliente::observe(new \App\Observers\UserActionsObserver);
     }
-    //validacon de campos del front
-    public static function storeValidation($request)
-    {
-        return [
-            'nombre' => 'required|string|max:255',
-            'apellido' => 'required|string|max:255',
-            'cedula' => 'required|string|unique:clientes|max:10',
-            'telefono' => 'string|max:50',
-            'sexo' => 'required|string|max:10',
-            'tipo' => 'required|string|max:20',
-            'dependencia_id' => 'required|string|max:255',
-            'email' => 'string|email|max:255|unique:clientes,email',
-            'user_id' => 'required|string',
-        ];
-    }
-
-    public static function updateValidation($request)
-    {
-        return [
-            'nombre' => 'required|string|max:255',
-            'apellido' => 'required|string|max:255',
-            'cedula' => 'required|string|unique:clientes|max:10',
-            'telefono' => 'string|max:50',
-            'sexo' => 'required|string|max:10',
-            'tipo' => 'required|string|max:20',
-            'dependencia_id' => 'required|string|max:255',
-            'email' => 'string|email|max:255|unique:clientes,email',
-            'user_id' => 'required|string',
-        ];
-    }
     
     //relacion de las tablas
    

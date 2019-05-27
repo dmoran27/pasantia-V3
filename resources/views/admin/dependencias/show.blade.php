@@ -3,7 +3,7 @@
 
 <div class="card">
     <div class="card-header">
-        {{ trans('global.show') }} {{ trans('global.user.title') }}
+        {{ trans('global.show') }} {{ trans('global.dependencia.title') }}
     </div>
 
     <div class="card-body">
@@ -11,44 +11,45 @@
             <tbody>
                 <tr>
                     <th>
-                         {{ trans('global.user.fields.nombre') }}  
+                         {{ trans('global.dependencia.fields.nombre') }}  
                     </th>
                     <td>
-                        {{ $area->nombre ?? '' }}
+                        {{ $dependencia->nombre ?? '' }}
                     </td>
                 </tr>
                 <tr>
                     <th>
-                          {{ trans('global.user.fields.apellido') }} 
+                          {{ trans('global.dependencia.fields.piso') }} 
                     </th>
                     <td>
-                        {{ $area->descripcion ?? '' }}
+                        {{ $dependencia->piso ?? '' }}
                     </td>
                 </tr>
                 <tr>
                     <th>
-                          {{ trans('global.user.fields.cedula') }} 
+                          {{ trans('global.dependencia.fields.edificio') }} 
                     </th>
                     <td>
-                        {{ $area->created_at ?? '' }}
+                        {{ $dependencia->edificio->nombre ?? '' }}
                     </td>
                 </tr>
                 <tr>
                     <th>
-                          {{ trans('global.user.fields.telefono') }} 
+                          {{ trans('global.dependencia.fields.creacion') }} 
                     </th>
                     <td>
-                        {{ $area->updated_at ?? '' }}
+                        {{ $dependencia->created_at ?? '' }}
                     </td>
                 </tr>
                 <tr>
                     <th>
-                          {{ trans('global.user.fields.sexo') }} 
+                          {{ trans('global.dependencia.fields.actualizacion') }} 
                     </th>
                     <td>
-                        {{ $area->sexo ?? '' }}
+                        {{ $dependencia->updated_at ?? '' }}
                     </td>
                 </tr>
+                
                 
             </tbody>
         </table>

@@ -13,7 +13,7 @@ class UpdateUsersRequest extends FormRequest
      */
     public function authorize()
     {
-         return abort_if(Gate::denies('user_edit'), 403, '403 Forbidden') ?? true;
+      return \Gate::allows('user_edit');
     }
 
     /**
@@ -23,6 +23,18 @@ class UpdateUsersRequest extends FormRequest
      */
     public function rules()
     {
-        return User::updateValidation($this);
+        return[
+            'email' => 'email|max:191|required|unique:users,email, id',
+            'password' => '',
+            'role.*' => 'integer|exists:roles,id|max:4294967295|required',
+            'remember_token' => 'max:191|nullable',
+            'nombre' => 'required',
+            'apellido' => 'required',
+            'cedula' => 'required|string|max:10|unique:users, id',
+            'telefono' => 'required|string|max:50',
+            'sexo' => 'required',
+            'area_id' => 'required|exists:areas,id',];
+
+
     }
 }

@@ -3,7 +3,7 @@
 
 <div class="card">
     <div class="card-header">
-        {{ trans('global.show') }} {{ trans('global.user.title') }}
+        {{ trans('global.show') }} {{ trans('global.edificio.title') }}
     </div>
 
     <div class="card-body">
@@ -11,42 +11,35 @@
             <tbody>
                 <tr>
                     <th>
-                         {{ trans('global.user.fields.nombre') }}  
+                         {{ trans('global.edificio.fields.nombre') }}  
                     </th>
                     <td>
-                        {{ $area->nombre ?? '' }}
+                        {{ $edificio->nombre ?? '' }}
+                    </td>
+                </tr>
+                
+                <tr>
+                    <th>
+                          {{ trans('global.edificio.fields.cedula') }} 
+                    </th>
+                    <td>
+                        {{ $edificio->created_at ?? '' }}
                     </td>
                 </tr>
                 <tr>
                     <th>
-                          {{ trans('global.user.fields.apellido') }} 
+                          {{ trans('global.edificio.fields.telefono') }} 
                     </th>
                     <td>
-                        {{ $area->descripcion ?? '' }}
+                        {{ $edificio->updated_at ?? '' }}
                     </td>
                 </tr>
                 <tr>
                     <th>
-                          {{ trans('global.user.fields.cedula') }} 
+                          {{ trans('global.edificio.fields.sexo') }} 
                     </th>
                     <td>
-                        {{ $area->created_at ?? '' }}
-                    </td>
-                </tr>
-                <tr>
-                    <th>
-                          {{ trans('global.user.fields.telefono') }} 
-                    </th>
-                    <td>
-                        {{ $area->updated_at ?? '' }}
-                    </td>
-                </tr>
-                <tr>
-                    <th>
-                          {{ trans('global.user.fields.sexo') }} 
-                    </th>
-                    <td>
-                        {{ $area->sexo ?? '' }}
+                        {{ $edificio->sexo ?? '' }}
                     </td>
                 </tr>
                 

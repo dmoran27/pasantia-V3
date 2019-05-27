@@ -37,9 +37,7 @@
                         {{ $errors->first('permissions') }}
                     </p>
                 @endif
-                <p class="helper-block">
-                    {{ trans('global.role.fields.permissions_helper') }}
-                </p>
+               
             </div>
             <div>
                 <input class="btn btn-danger" type="submit" value="{{ trans('global.save') }}">

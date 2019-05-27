@@ -20,7 +20,10 @@
                 <thead>
                     <tr>
                         <th width="10">
-
+                            
+                        </th>
+                        <th width="10">
+                            
                         </th>
                         <th>
                             {{ trans('global.role.fields.title') }}
@@ -37,7 +40,10 @@
                     @foreach($roles as $key => $role)
                         <tr data-entry-id="{{ $role->id }}">
                             <td>
-
+                                
+                            </td>
+                            <td>
+                                {{$loop->index+1}}
                             </td>
                             <td>
                                 {{ $role->title ?? '' }}

@@ -2,12 +2,11 @@
 
 namespace App\Http\Controllers\Admin;
 
+use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\MassDestroyClienteRequest;
-use App\Http\Requests\Admin\StoreClientesRequest;
-use App\Http\Requests\Admin\UpdateClientesRequest;
+use Illuminate\Support\Facades\Validator;
 use App\General;
-use App\Role;
 use App\Cliente;
 use App\Dependencia;
 
@@ -23,19 +22,38 @@ class ClienteController extends Controller{
         abort_unless(\Gate::allows('cliente_show'), 403);
         return view('admin.clientes.show', compact('cliente'));
     }
+
     public function create(){
-        $dependencias = Dependencia::all()->pluck('nombre', 'id');
+        $dependencias = Dependencia::all();
         $enumoption = General::getEnumValues('clientes','sexo');
-        $enumoption2 = General::getEnumValues('tipos','sexo');
-        $cliente->load('roles','dependencias');
+        $enumoption2 = General::getEnumValues('clientes','tipo');
         abort_unless(\Gate::allows('cliente_create'), 403);
-        return view('admin.clientes.create', compact('roles', 'enumoption', 'enumoption2', 'dependencias', 'cliente'));
+        return view('admin.clientes.create', compact('enumoption', 'enumoption2', 'dependencias'));
     }
 
-    public function store(StoreClientesRequest $request){
+    public function store(Request $request){
         abort_unless(\Gate::allows('cliente_create'), 403);
+        $request["user_id"]=auth()->user()->id;
+        $validator = Validator::make($request->all(), [
+            'nombre' => 'required|string|max:255',
+            'apellido' => 'required|string|max:255',
+            'cedula' => 'required|string|unique:clientes|max:10',
+            'telefono' => 'string|max:50|nullable',
+            'sexo' => 'required',
+            'tipo' => 'required',
+            'dependencia_id' => 'required',
+            'email' => 'string|email|max:255|nullable',
+            'user_id'=> 'required',
+        ]);
+        if ($validator->fails()) {
+            
+           return redirect()
+                        ->route('admin.clientes.create')
+                        ->withErrors($validator)
+                        ->withInput();
+            }
+        
         $cliente = Cliente::create($request->all());
-        $cliente->roles()->sync($request->input('roles', []));
         $clientes = Cliente::all();
         $notificacion = array(
             'message' => 'Clientes agregados con exito.', 
@@ -45,18 +63,37 @@ class ClienteController extends Controller{
     }
 
     public function edit(Cliente $cliente){
-        $dependencias = Dependencia::all()->pluck('nombre', 'id');
-         $enumoption2 = General::getEnumValues('tipos','sexo');
+        $dependencias = Dependencia::all();
+         $enumoption2 = General::getEnumValues('clientes','tipo');
         $enumoption = General::getEnumValues('clientes','sexo');
-        $cliente->load('roles','dependencias');
         abort_unless(\Gate::allows('cliente_edit'), 403);      
-        return view('admin.clientes.edit', compact('roles','enumoption', 'dependencias', 'cliente'));
+        return view('admin.clientes.edit', compact('enumoption','enumoption2', 'dependencias', 'cliente'));
     }
 
-    public function update(UpdateClientesRequest $request, Cliente $cliente){
-        abort_unless(\Gate::allows('cliente_edit'), 403);    
+    public function update(Request $request, Cliente $cliente){
+        abort_unless(\Gate::allows('cliente_edit'), 403); 
+         $request["user_id"]=auth()->user()->id;
+        $validator = Validator::make($request->all(), [
+           'nombre' => 'required|string|max:255',
+            'apellido' => 'required|string|max:255',
+            'cedula' => 'required|string|max:10',
+            'telefono' => 'string|max:50|nullable',
+            'sexo' => 'required|string|max:10',
+            'tipo' => 'required|string|max:20',
+            'dependencia_id' => 'required|string|max:255',
+            'email' => 'string|email|max:255|nullable',
+            'user_id'=> 'required',
+        ]);
+
+         if ($validator->fails()) {
+            
+           return redirect()
+                        ->route('admin.clientes.edit', $user)
+                        ->withErrors($validator)
+                        ->withInput();
+            }  
+        
         $cliente->update($request->all());
-        $cliente->roles()->sync($request->input('roles', []));
         $clientes = Cliente::all();
         $notificacion = array(
             'message' => 'Usuario creado con exito.', 
