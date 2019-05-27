@@ -1,77 +1,63 @@
-@extends('layouts.app')
-
+@extends('layouts.admin')
 @section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ __('Editar') }}</div>
 
-                <div class="card-body">
-                     <form method="POST" action="{{route('tipos.update', $tipos)}}" aria-label="{{ __('Editar') }}">
-                        @csrf
-                            {!!method_field('PUT')!!}
+<div class="card">
+    <div class="card-header">
+        {{ trans('global.edit') }} {{ trans('global.tipo.title_singular') }}
+    </div>
 
-                        <div class="form-group row">
-                            <label for="nombre" class="col-md-4 col-form-label text-md-right">{{ __('Nombre') }}</label>
+    <div class="card-body">
+        <form action="{{ route("admin.tipos.update", [$tipo->id]) }}" method="POST" enctype="multipart/form-data">
+            @csrf
+            @method('PUT')
 
-                            <div class="col-md-6">
-                                <input id="nombre" type="text" class="form-control{{ $errors->has('nombre') ? ' is-invalid' : '' }}" name="nombre" value="{{$errors->has('nombre') ? old('nombre')  :  $tipos->nombre}}">
+            <div class="form-group {{ $errors->has('nombre') ? 'has-error' : '' }}">
+                <label for="nombre">{{ trans('global.tipo.fields.nombre') }}*</label>
+                <input type="text" id="nombre" name="nombre" class="form-control" value="{{ old('nombre', isset($tipo) ? $tipo->nombre : '') }}">
+                @if($errors->has('nombre'))
+                    <p class="help-block">
+                        {{ $errors->first('nombre') }}
+                    </p>
+                @endif
+            </div>
+            <div class="form-group {{ $errors->has('descripcion') ? 'has-error' : '' }}">
+                <label for="descripcion">{{ trans('global.tipo.fields.descripcion') }}*</label>
+                <input type="text" id="descripcion" name="descripcion" class="form-control" value="{{ old('descripcion', isset($tipo) ? $tipo->descripcion : '') }}">
+                @if($errors->has('descripcion'))
+                    <p class="help-block">
+                        {{ $errors->first('descripcion') }}
+                    </p>
+                @endif
+            </div>
+            
+             <div class="form-group {{ $errors->has('tipo')}}">
+                <label for="tipo" class=" col-form-label text-md-right">{{ trans('global.tipo.fields.tipo') }}*</label>
 
-                                @if ($errors->has('nombre'))
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $errors->first('nombre') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
-                            <label for="tipo" class="col-md-4 col-form-label text-md-right">{{ __('tipo') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="tipo" type="text" class="form-control{{ $errors->has('tipo') ? ' is-invalid' : '' }}" name="tipo" value="{{$errors->has('tipo') ? old('tipo')  :  $tipos->tipo}}">
-
-                                @if ($errors->has('tipo'))
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $errors->first('tipo') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
-                        </div>
-
-                         <div class="form-group row">
-                            <label for="descripcion" class="col-md-4 col-form-label text-md-right"> {{ __('descripcion') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="descripcion" type="text" class="form-control{{ $errors->has('descripcion') ? ' is-invalid' : '' }}" name="descripcion" value="{{$errors->has('descripcion') ? old('descripcion')  :  $tipos->descripcion}}">
-
-                                @if ($errors->has('descripcion'))
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $errors->first('descripcion') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
-                            <div class="col-md-6">
-                                <input id="user_id" type="hidden" class="hidden" name="user_id" value="{{ Auth::user()->id }}" required>
-                            </div>
-                        </div>
-
-                        <div class="form-group row mb-0">
-                            <div class="col-md-6 offset-md-4">
-
-                                <button type="submit" class="btn btn-primary">
-                                    {{ __('Regitrar') }}
-                                </button>
-                            </div>
-                        </div>
-                    </form>
+                <div class="">
+                   
+                    <select class="form-control{{ $errors->has('tipo') ? ' is-invalid' : '' }} select2 select2-hidden-accessible" name="tipo" style="width: 100%;" tabindex="-1" aria-hidden="true">
+                         @foreach($enumoption2 as $t)
+                            <option value="{{$t}}" @if($t === $tipo->tipo) selected @else '' @endif >{{$t}}</option>
+                        @endforeach
+                      
+                      </select>
                 </div>
             </div>
-        </div>
+            <div class="form-group row">
+                <div class="col-md-6">
+                    <input id="user_id" type="hidden" class="hidden" name="user_id">
+                </div>
+            </div>
+            @if($errors->has('roles'))
+                    <p class="help-block">
+                        {{ $errors->first('roles') }}
+                    </p>
+                @endif
+            <div>
+                <input class="btn btn-danger" type="submit" value="{{ trans('global.save') }}">
+            </div>
+        </form>
     </div>
 </div>
+
 @endsection

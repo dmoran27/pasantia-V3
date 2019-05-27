@@ -26,16 +26,10 @@ class Software extends Model
         Software::observe(new \App\Observers\UserActionsObserver);
     }
 //relacion entre las tablas en la base de datos
-public function caracteristicas(){
-    	return $this->BelongsToMany(Caracteristica::class);
-    }
 
-public function softwares(){
-    	return $this->BelongsToMany(Software::class);
-    }
 public function tipo()
     {
-        return $this->BelongsTo(Tipo::class);
+        return $this->BelongsTo(Tipo::class, 'tipos_id');
     }
 }
 

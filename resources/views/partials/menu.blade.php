@@ -141,6 +141,18 @@
                             </p>
                         </a>
                         <ul class="nav nav-treeview">
+                            @can('tipo_access')
+                                <li class="nav-item">
+                                    <a href="{{ route("admin.tipos.index") }}" class="nav-link {{ request()->is('admin/tipos') || request()->is('admin/tipos/*') ? 'active' : '' }}">
+                                        <i class="fas fa-unlock-alt">
+
+                                        </i>
+                                        <p>
+                                            <span>{{ trans('global.tipo.title') }}</span>
+                                        </p>
+                                    </a>
+                                </li>
+                            @endcan
                             @can('area_access')
                                 <li class="nav-item">
                                     <a href="{{ route("admin.areas.index") }}" class="nav-link {{ request()->is('admin/areas') || request()->is('admin/areas/*') ? 'active' : '' }}">
