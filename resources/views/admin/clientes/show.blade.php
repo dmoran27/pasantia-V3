@@ -2,16 +2,17 @@
 @section('content')
 
 <div class="card">
-    <div class="card-header">
-        {{ trans('global.show') }} {{ trans('global.cliente.title') }}
+      <div class="card-header">
+          <h5 class="text-center ">DATOS DEL CLIENTE.</h5>
     </div>
+
 
     <div class="card-body">
         <table class="table table-bordered table-striped">
             <tbody>
                 <tr>
                     <th>
-                         {{ trans('global.cliente.fields.nombre') }}  
+                         Nombre:
                     </th>
                     <td>
                         {{ $cliente->nombre ?? '' }}
@@ -19,7 +20,7 @@
                 </tr>
                 <tr>
                     <th>
-                          {{ trans('global.cliente.fields.apellido') }} 
+                          Apellido:
                     </th>
                     <td>
                         {{ $cliente->apellido ?? '' }}
@@ -27,7 +28,7 @@
                 </tr>
                 <tr>
                     <th>
-                          {{ trans('global.cliente.fields.cedula') }} 
+                          Cedula:
                     </th>
                     <td>
                         {{ $cliente->cedula ?? '' }}
@@ -35,7 +36,7 @@
                 </tr>
                 <tr>
                     <th>
-                          {{ trans('global.cliente.fields.telefono') }} 
+                          Telefono:
                     </th>
                     <td>
                         {{ $cliente->telefono ?? '' }}
@@ -43,7 +44,7 @@
                 </tr>
                 <tr>
                     <th>
-                          {{ trans('global.cliente.fields.sexo') }} 
+                          Sexo:
                     </th>
                     <td>
                         {{ $cliente->sexo ?? '' }}
@@ -51,7 +52,7 @@
                 </tr>
                 <tr>
                     <th>
-                         {{ trans('global.cliente.fields.email') }} 
+                         Email:
                     </th>
                     <td>
                          {{ $cliente->email ?? '' }}
@@ -60,7 +61,7 @@
 
                 <tr>
                     <th>
-                          {{ trans('global.cliente.fields.area') }} 
+                          Area:
                     </th>
                     <td>
                         {{ $cliente->tipo ?? '' }}
@@ -69,7 +70,7 @@
 
                 <tr>
                     <th>
-                         {{ trans('global.cliente.fields.area') }}
+                         Dependencia:
                     </th>
                     <td>
                        {{ $cliente->dependencia->nombre ?? '' }}
@@ -77,7 +78,7 @@
                 </tr>
                 <tr>
                     <th>
-                          {{ trans('global.cliente.fields.creacion') }} 
+                         Fecha de creación:
                     </th>
                     <td>
                         {{ $cliente->created_at ?? '' }}
@@ -85,7 +86,7 @@
                 </tr>
                 <tr>
                     <th>
-                          {{ trans('global.cliente.fields.actualizacion') }} 
+                          Fecha de actualizacion:
                     </th>
                     <td>
                         {{ $cliente->updated_at ?? '' }}

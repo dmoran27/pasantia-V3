@@ -4,15 +4,16 @@
     <div style="margin-bottom: 10px;" class="row">
         <div class="col-lg-12">
             <a class="btn btn-success" href="{{ route("admin.dependencias.create") }}">
-                {{ trans('global.add') }} {{ trans('global.dependencia.title_singular') }}
+              Agregar nueva dependencia
             </a>
         </div>
     </div>
 @endcan
 <div class="card">
-    <div class="card-header">
-        {{ trans('global.dependencia.title_singular') }} {{ trans('global.list') }}
+      <div class="card-header">
+          <h5 class="text-center ">DEPENDENCIAS.</h5>
     </div>
+
 
     <div class="card-body">
         <div class="table-responsive">
@@ -26,17 +27,17 @@
                             #
                         </th>
                         <th>
-                            {{ trans('global.dependencia.fields.nombre') }} 
+                            Nombre
                         </th>
                           <th>
-                            {{ trans('global.dependencia.fields.piso') }} 
+                            Piso
                         </th>
                         <th>
-                            {{ trans('global.dependencia.fields.edificio') }} 
+                            Edificio
                         </th>                      
                         
                         <th>
-                            {{ trans('global.dependencia.fields.acciones') }} 
+                            Acciones
                             &nbsp;
                         </th>
                     </tr>
@@ -62,20 +63,20 @@
                              
                             <td>
                                  @can('user_show')
-                                    <a class="btn btn-xs btn-success" href="{{ route('admin.dependencias.show', $dependencia->id) }}">
-                                        {{ trans('global.view') }}
+                                    <a class="btn btn-xs btn-success w-100" href="{{ route('admin.dependencias.show', $dependencia->id) }}">
+                                       Ver
                                     </a>
                                 @endcan
                                 @can('user_edit')
-                                    <a class="btn btn-xs btn-info" href="{{ route('admin.dependencias.edit', $dependencia->id) }}">
-                                        {{ trans('global.edit') }}
+                                    <a class="btn btn-xs btn-info w-100" href="{{ route('admin.dependencias.edit', $dependencia->id) }}">
+                                       Editar
                                     </a>
                                 @endcan
                                 @can('user_delete')
-                                    <form action="{{ route('admin.dependencias.destroy', $dependencia->id) }}" method="POST" onsubmit="return confirm('{{ trans('global.areYouSure') }}');" style="display: inline-block;">
+                                    <form action="{{ route('admin.dependencias.destroy', $dependencia->id) }}" class='w-100' method="POST" onsubmit="return confirm('{{ trans('global.areYouSure') }}');" style="display: inline-block;">
                                         <input type="hidden" name="_method" value="DELETE">
                                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                                        <input type="submit" class="btn btn-xs btn-danger" value="{{ trans('global.delete') }}">
+                                        <input type="submit" class="btn btn-xs btn-danger w-100" value="Eliminar">
                                     </form>
                                 @endcan
                             </td>
@@ -99,7 +100,7 @@
 
 
     $(function () {
-  let deleteButtonTrans = '{{ trans('global.datatables.delete') }}'
+  let deleteButtonTrans = 'Eliminar Selección'
   let deleteButton = {
     text: deleteButtonTrans,
     url: "{{ route('admin.dependencias.massDestroy') }}",

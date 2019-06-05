@@ -22,7 +22,6 @@ class CreateTiposTable extends Migration
              $table->enum('tipo', ['Equipo', 'Software','Periferico','Componente']);   
              $table->softDeletes(); //Nueva línea, para el borrado lógico
             $table->timestamps();
-             $table->index(['deleted_at']);
         });
     }
 

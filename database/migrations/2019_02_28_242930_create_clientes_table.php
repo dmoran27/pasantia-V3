@@ -28,7 +28,6 @@ class CreateClientesTable extends Migration
             $table->foreign('user_id')->references('id')->on('users');
             $table->softDeletes(); //Nueva línea, para el borrado lógico
             $table->timestamps();
-             $table->index(['deleted_at']);
 
         });
     }

@@ -34,7 +34,7 @@ class SoftwareController extends Controller{
         $request["user_id"]=auth()->user()->id;
         $validator = Validator::make($request->all(), [
             'nombre' => 'required',
-            'tipos_id' => 'required',
+            'tipo_id' => 'required',
             'descripcion' => 'required',
             'user_id' => 'required',
          ]);

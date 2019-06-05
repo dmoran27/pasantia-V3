@@ -41,6 +41,12 @@ class Tipo extends Model
     {
         return $this->HasMany(Equipo::class);
     }
+     public function tickets()
+    {
+        return $this->HasMany(Ticket::class);
+    }
+
+
 
 
 }

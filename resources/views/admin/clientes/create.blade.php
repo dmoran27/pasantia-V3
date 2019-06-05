@@ -3,7 +3,7 @@
 
 <div class="card">
     <div class="card-header">
-        {{ trans('global.create') }} {{ trans('global.cliente.title_singular') }}
+          <h5 class="text-center ">EDITAR CLIENTE.</h5>
     </div>
 
     <div class="card-body">
@@ -113,7 +113,7 @@
                 @endif
             
             <div>
-                <input class="btn btn-danger" type="submit" value="{{ trans('global.save') }}">
+                <input class="btn btn-danger" type="submit" value="Guardar  ">
             </div>
         </form>
     </div>

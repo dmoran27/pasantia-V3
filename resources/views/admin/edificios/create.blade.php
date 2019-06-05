@@ -2,16 +2,17 @@
 @section('content')
 
 <div class="card">
-    <div class="card-header">
-        {{ trans('global.create') }} {{ trans('global.edificio.title_singular') }}
+     <div class="card-header">
+          <h5 class="text-center ">CREAR NUEVO EDIFICIO.</h5>
     </div>
+
 
     <div class="card-body">
         <form action="{{ route("admin.edificios.store") }}" method="POST" enctype="multipart/form-data">
             @csrf
         
             <div class="form-group {{ $errors->has('nombre') ? 'has-error' : '' }}">
-                <label for="nombre">{{ trans('global.edificio.fields.nombre') }}*</label>
+                <label for="nombre">Nombre*</label>
                 <input type="textarea" id="nombre" name="nombre" class="form-control" value="{{ old('nombre') }}">
                 @if($errors->has('nombre'))
                     <p class="help-block">

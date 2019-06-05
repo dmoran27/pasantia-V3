@@ -21,9 +21,8 @@ class Equipo extends Model
             'serial',
           	'estado_equipo',
             'perteneciente',
-            'observacion',
             'user_id',
-            'tipo_id',
+            'tipo_id'
 
     ];
     //observar cambios en la base de datos
@@ -59,25 +58,24 @@ class Equipo extends Model
     	return $this->HasMany(Departamento::class);
     }
 
-public function perifericos(){
+    public function perifericos(){
     	return $this->BelongsToMany(Periferico::class);
     }
-public function caracteristicas(){
+
+    public function softwares(){
+        return $this->BelongsToMany(Software::class);
+    }
+    public function caracteristicas(){
     	return $this->BelongsToMany(Caracteristica::class);
     }
 
-public static function getExcerpt($str, $startPos = 0, $maxLength = 50) {
-        if(strlen($str) > $maxLength) {
-            $excerpt   = substr($str, $startPos, $maxLength - 6);
-            $lastSpace = strrpos($excerpt, ' ');
-            $excerpt   = substr($excerpt, 0, $lastSpace);
-            $excerpt  .= ' [...]';
-        } else {
-            $excerpt = $str;
-        }
-
-        return $excerpt;
+    public function ticketSoftwares()
+    {
+        return $this->BelongsToMany(TicketSoftware::class);
     }
-
-
+    
+     public function ticketEquipos()
+    {
+        return $this->BelongsToMany(TicketEquipo::class);
+    }
 }

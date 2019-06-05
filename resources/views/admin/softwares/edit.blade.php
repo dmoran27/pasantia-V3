@@ -30,13 +30,13 @@
                 @endif
             </div>
             <div class="form-group{{ $errors->has('tipo')}}">
-                <label for="tipo" class=" col-form-label text-md-right">{{ trans('global.user.fields.tipo') }}*</label>
+                <label for="tipo" class=" col-form-label text-md-right">{{ trans('global.software.fields.tipo') }}*</label>
 
                 <div class="">
                    
                     <select class="form-control{{ $errors->has('tipo') ? ' is-invalid' : '' }} select2 select2-hidden-accessible" name="tipo_id" style="width: 100%;" tabindex="-1" aria-hidden="true">
                         @foreach($tipos as $tipo)
-                          <option value="{{ $tipo->id}}" @if($tipo->id=== $user->tipo_id) selected @else '' @endif >{{$tipo->nombre}}</option>
+                          <option value="{{ $tipo->id}}" @if($tipo->id === $software->tipo_id) selected @else '' @endif >{{$tipo->nombre}}</option>
                       @endforeach
                     </select>
 

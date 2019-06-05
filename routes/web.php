@@ -65,10 +65,24 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
 	 Route::delete('tipos/destroy', 'TipoController@massDestroy')->name('tipos.massDestroy');
 
      Route::resource('tipos', 'TipoController');
-   /***********************************************Ticket*/
-    Route::delete('tickets/destroy', 'TicketController@massDestroy')->name('tickets.massDestroy');
 
+   /***********************************************Ticket*/
     Route::resource('tickets', 'TicketController');
+    Route::resource('ticketsequipos', 'TicketEquipoController');
+    Route::resource('ticketssoftwares', 'TicketSoftwareController');
+    Route::resource('ticketsapoyos', 'TicketApoyoController');
+    Route::resource('ticketseventos', 'TicketEventoController');
+    Route::resource('ticketsadiestramientos', 'TicketAdiestramientoController');
+
+
+
+
+
+
+
+
+
+
 });
 
 Auth::routes();

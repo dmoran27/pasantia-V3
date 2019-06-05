@@ -23,14 +23,12 @@ class CreateEquiposTable extends Migration
             $table->string('serial')->nullable();
             $table->enum('estado_equipo',['nuevo', 'remplazado', 'dañado', 'obsoleto']);
             $table->enum('perteneciente', ['si', 'no']);
-            $table->string('observacion')->nullable();
             $table->unsignedInteger('user_id');
             $table->unsignedInteger('tipo_id');
             $table->foreign('user_id')->references('id')->on('users');
             $table->foreign('tipo_id')->references('id')->on('tipos');
             $table->softDeletes(); //Nueva línea, para el borrado lógico
             $table->timestamps();
-             $table->index(['deleted_at']);
 
         });
     }

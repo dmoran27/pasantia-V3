@@ -33,7 +33,7 @@
                 <label for="tipo" class=" col-form-label text-md-right">{{ trans('global.foftware.fields.tipo') }}*</label>
                 <div class="">   
                  
-                    <select class="form-control{{ $errors->has('tipo') ? ' is-invalid' : '' }} " name="tipos_id" style="width: 100%;" tabindex="-1" aria-hidden="true">
+                    <select class="form-control{{ $errors->has('tipo') ? ' is-invalid' : '' }} " name="tipo_id" style="width: 100%;" tabindex="-1" aria-hidden="true">
                          @foreach($tipos as $tipo)
                             <option value="{{$tipo->id}}">{{$tipo->nombre}}</option>
                         @endforeach

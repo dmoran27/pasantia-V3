@@ -15,14 +15,17 @@ class CreatePerifericosTable extends Migration
     {
         Schema::create('perifericos', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('identificador')->unique();
              $table->string('nombre');
              $table->unsignedInteger('tipo_id');
+             $table->enum('estado',['nuevo', 'remplazado', 'dañado', 'obsoleto']);
+              $table->enum('perteneciente', ['si', 'no']);
+            $table->string('observacion')->nullable();
             $table->foreign('tipo_id')->references('id')->on('tipos');
              $table->unsignedInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users');
              $table->softDeletes(); //Nueva línea, para el borrado lógico
             $table->timestamps();
-             $table->index(['deleted_at']);
         });
     }
 

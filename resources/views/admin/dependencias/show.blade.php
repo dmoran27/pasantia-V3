@@ -2,16 +2,17 @@
 @section('content')
 
 <div class="card">
-    <div class="card-header">
-        {{ trans('global.show') }} {{ trans('global.dependencia.title') }}
+     <div class="card-header">
+          <h5 class="text-center ">DATOS DE DEPENDENCIA.</h5>
     </div>
+
 
     <div class="card-body">
         <table class="table table-bordered table-striped">
             <tbody>
                 <tr>
                     <th>
-                         {{ trans('global.dependencia.fields.nombre') }}  
+                        Nombre:
                     </th>
                     <td>
                         {{ $dependencia->nombre ?? '' }}
@@ -19,7 +20,7 @@
                 </tr>
                 <tr>
                     <th>
-                          {{ trans('global.dependencia.fields.piso') }} 
+                         Piso:
                     </th>
                     <td>
                         {{ $dependencia->piso ?? '' }}
@@ -27,7 +28,7 @@
                 </tr>
                 <tr>
                     <th>
-                          {{ trans('global.dependencia.fields.edificio') }} 
+                         Edificio:
                     </th>
                     <td>
                         {{ $dependencia->edificio->nombre ?? '' }}
@@ -35,7 +36,7 @@
                 </tr>
                 <tr>
                     <th>
-                          {{ trans('global.dependencia.fields.creacion') }} 
+                         Fecha de creacion:
                     </th>
                     <td>
                         {{ $dependencia->created_at ?? '' }}
@@ -43,7 +44,7 @@
                 </tr>
                 <tr>
                     <th>
-                          {{ trans('global.dependencia.fields.actualizacion') }} 
+                         Fecha de actualizacion:
                     </th>
                     <td>
                         {{ $dependencia->updated_at ?? '' }}

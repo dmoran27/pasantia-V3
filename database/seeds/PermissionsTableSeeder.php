@@ -158,13 +158,13 @@ class PermissionsTableSeeder extends Seeder
                 'title'      => 'dependencia_access',
                 'created_at' => '2019-04-15 19:14:42',
                 'updated_at' => '2019-04-15 19:14:42',
-            ], [
+            ], /***************************Edificio***************************************/
+           [
                 
-                'title'      => 'dependencia_create',
+                'title'      => 'edificio_create',
                 'created_at' => '2019-04-15 19:14:42',
                 'updated_at' => '2019-04-15 19:14:42',
             ],
-/***************************Edificio***************************************/
             [
                 
                 'title'      => 'edificio_edit',
@@ -191,6 +191,12 @@ class PermissionsTableSeeder extends Seeder
             ],
 
 /***************************Equipo***************************************/
+             ]     
+                'title'      => 'equipo_create',
+                'created_at' => '2019-04-15 19:14:42',
+                'updated_at' => '2019-04-15 19:14:42',
+            ],
+
             [
                 
                 'title'      => 'equipo_edit',

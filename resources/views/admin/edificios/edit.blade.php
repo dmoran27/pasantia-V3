@@ -2,9 +2,10 @@
 @section('content')
 
 <div class="card">
-    <div class="card-header">
-        {{ trans('global.edit') }} {{ trans('global.edificio.title_singular') }}
+      <div class="card-header">
+          <h5 class="text-center ">ACTUALIZAR EDIFICIO.</h5>
     </div>
+
 
     <div class="card-body">
         <form action="{{ route("admin.edificios.update", [$edificio->id]) }}" method="POST" enctype="multipart/form-data">
@@ -13,7 +14,7 @@
 
             
             <div class="form-group {{ $errors->has('nombre') ? 'has-error' : '' }}">
-                <label for="nombre">{{ trans('global.edificio.fields.nombre') }}*</label>
+                <label for="nombre">Nombre*</label>
                 <input type="textedificio" id="nombre" name="nombre" class="form-control" value="{{ old('nombre', isset($edificio) ? $edificio->nombre : '') }}">
                 @if($errors->has('nombre'))
                     <p class="help-block">
@@ -23,7 +24,7 @@
             </div>
            
             <div>
-                <input class="btn btn-danger" type="submit" value="{{ trans('global.save') }}">
+                <input class="btn btn-danger" type="submit" value="ACTUALIZAR">
             </div>
         </form>
     </div>

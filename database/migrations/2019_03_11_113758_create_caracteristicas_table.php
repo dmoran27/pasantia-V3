@@ -15,13 +15,14 @@ class CreateCaracteristicasTable extends Migration
     {
         Schema::create('caracteristicas', function (Blueprint $table) {
             $table->increments('id');
-             $table->string('nombre');
-             $table->string('propiedad');
-             $table->unsignedInteger('user_id');
+            $table->string('nombre');
+            $table->string('propiedad');
+            $table->string('observacion')->nullable();
+            $table->unsignedInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users');
-             $table->softDeletes(); //Nueva línea, para el borrado lógico
+            $table->softDeletes(); //Nueva línea, para el borrado lógico
             $table->timestamps();
-             $table->index(['deleted_at']);
+            
         });
     }
 

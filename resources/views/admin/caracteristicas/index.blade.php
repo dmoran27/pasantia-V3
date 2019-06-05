@@ -1,99 +1,137 @@
-
-
-@extends('layouts.app')
-
+@extends('layouts.admin')
 @section('content')
+@can('user_create')
+    <div style="margin-bottom: 10px;" class="row">
+        <div class="col-lg-12">
+            <a class="btn btn-success" href="{{ route("admin.caracteristicas.create") }}">
+                {{ trans('global.add') }} {{ trans('global.caracteristica.title_singular') }}
+            </a>
+        </div>
+    </div>
+@endcan
+<div class="card">
+    <div class="card-header">
+        {{ trans('global.caracteristica.title_singular') }} {{ trans('global.list') }}
+    </div>
 
-<section class="content login">
-
-		
-
-      <div class="row">
-        <div class="col-xs-12">
-         
-          <div class="box">
-            <div class="box-header">
-              <h3 class="box-title">Tabla de Caracteristicas</h3>
-            </div>
-            <!-- /.box-header -->
-            <div class="box-body">
-              <table id="" class="dataTable1 table table-bordered table-hover">
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class=" table table-bordered table-striped table-hover datatable">
                 <thead>
-                <tr>
-                  <th>Id</th>
-				<th>Nombre</th>
-				<th>Propiedad</th>
-				<th>Usuario</th>
-				<th>Acciones</th>
-                </tr>
+                    <tr>
+                        <th width="10">
+                            
+                        </th>
+                         <th width="10">
+                            #
+                        </th>
+                        <th>
+                            {{ trans('global.caracteristica.fields.nombre') }} 
+                        </th>
+                          <th>
+                            {{ trans('global.caracteristica.fields.piso') }} 
+                        </th>
+                        <th>
+                            {{ trans('global.caracteristica.fields.edificio') }} 
+                        </th>                      
+                        
+                        <th>
+                            {{ trans('global.caracteristica.fields.acciones') }} 
+                            &nbsp;
+                        </th>
+                    </tr>
                 </thead>
                 <tbody>
-                		@foreach($caracteristicas as $caracteristica)
-               <tr>
-					<td>{{$caracteristica->id}}</td>
-					<td>{{$caracteristica->nombre}}</td>
-					<td>{{$caracteristica->propiedad}}</td>
-					<td>{{$caracteristica->user_id}}</td>
-					<td>
-						<div class="">	
+                    @foreach($caracteristicas as $key => $caracteristica )
+                        <tr data-entry-id="{{ $caracteristica->id }}">
+                            <td>
+                           
+                            </td>
+                            <td>
+                                  {{$loop->index+1}}
+                            </td>
+                            <td>
+                                {{ $caracteristica->nombre ?? '' }}
+                            </td>
+                            <td>
+                                {{ $caracteristica->piso ?? '' }}
+                            </td>
+                            <td>
+                                {{ $caracteristica->edificio->nombre ?? '' }}
+                            </td>
+                             
+                            <td>
+                                 @can('user_show')
+                                    <a class="btn btn-xs btn-success" href="{{ route('admin.caracteristicas.show', $caracteristica->id) }}">
+                                        {{ trans('global.view') }}
+                                    </a>
+                                @endcan
+                                @can('user_edit')
+                                    <a class="btn btn-xs btn-info" href="{{ route('admin.caracteristicas.edit', $caracteristica->id) }}">
+                                        {{ trans('global.edit') }}
+                                    </a>
+                                @endcan
+                                @can('user_delete')
+                                    <form action="{{ route('admin.caracteristicas.destroy', $caracteristica->id) }}" method="POST" onsubmit="return confirm('{{ trans('global.areYouSure') }}');" style="display: inline-block;">
+                                        <input type="hidden" name="_method" value="DELETE">
+                                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                                        <input type="submit" class="btn btn-xs btn-danger" value="{{ trans('global.delete') }}">
+                                    </form>
+                                @endcan
+                            </td>
 
-	  							@can('caracteristicas.create')
-	  							<div class="col-xs-2 ">
-	  								<a href="{{route('caracteristicas.show', $caracteristica->id)}}" class="btn btn-info ">Mostrar</a>
-	  							</div>
-	  							@endcan
-	  							@can('caracteristicas.create')
-	  							<div class="col-xs-2 ">
-	  								<a href="{{route('caracteristicas.edit', $caracteristica->id)}}" class="btn btn-success ">Editar</a>
-	  							</div>				
-								@endcan
-	  							@can('caracteristicas.create')							
-								<div class="col-xs-2  ">
-									<form method="POST"  action="{{route('caracteristicas.destroy', $caracteristica->id)}}">
-									@csrf
-									{!!method_field('DELETE')!!}
-
-								 <button type="submit" class="btn btn-danger">Eliminar</button>
-								</form>
-							</div>
-								</div>
-								@endcan
-							</div>
-					</td>
-				</tr>
-				
-			
-                	@endforeach
+                        </tr>
+                    @endforeach
                 </tbody>
-                <tfoot>
-                <tr>
-                 <th>Id</th>
-				<th>Nombre</th>
-				<th>Propiedad</th>
-				<th>Usuario</th>
-				<th>Acciones</th>
-                </tr>
-                </tfoot>
-              </table>
-            </div>
-            <!-- /.box-body -->
-          </div>
-          <!-- /.box -->
+            </table>
         </div>
-        <!-- /.col -->
-      </div>
-      <!-- /.row -->
-      <div class="row d-flex justify-content-end ">
-			  @can('caracteristicas.create')
-			<div class="col-md-2 ">
-				<a href="{{route('caracteristicas.create')}}" class="btn btn-info m-2">Agregar Nueva caracteristica</a>
-			</div>
-			  @endcan
-			
-			
-		</div>
+    </div>
+</div>
+@endsection
+@section('scripts')
+@parent
+<script>
+ $(function () {
 
-    </section>
+    
+ });
 
 
+
+    $(function () {
+  let deleteButtonTrans = 'Eliminar Seleccion'
+  let deleteButton = {
+    text: deleteButtonTrans,
+    url: "{{ route('admin.caracteristicas.massDestroy') }}",
+    className: 'btn-danger',
+    action: function (e, dt, node, config) {
+      var ids = $.map(dt.rows({ selected: true }).nodes(), function (entry) {
+          return $(entry).data('entry-id')
+      });
+
+      if (ids.length === 0) {
+        alert('{{ trans('global.datatables.zero_selected') }}')
+
+        return
+      }
+
+      if (confirm('{{ trans('global.areYouSure') }}')) {
+        $.ajax({
+          headers: {'x-csrf-token': _token},
+          method: 'POST',
+          url: config.url,
+          data: { ids: ids, _method: 'DELETE' }})
+          .done(function () { location.reload() })
+      }
+    }
+  }
+  let dtButtons = $.extend(true, [], $.fn.dataTable.defaults.buttons)
+@can('user_delete')
+  dtButtons.push(deleteButton)
+@endcan
+
+  $('.datatable:not(.ajaxTable)').DataTable({ buttons: dtButtons })
+});
+
+</script>
 @endsection

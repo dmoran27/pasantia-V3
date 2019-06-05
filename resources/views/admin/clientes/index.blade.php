@@ -4,17 +4,18 @@
     <div style="margin-bottom: 10px;" class="row">
         <div class="col-lg-12">
             <a class="btn btn-success" href="{{ route("admin.clientes.create") }}">
-                {{ trans('global.add') }} {{ trans('global.cliente.title_singular') }}
+                Agregar Nuevo Cliente
             </a>
         </div>
     </div>
 @endcan
 <div class="card">
     <div class="card-header">
-        {{ trans('global.cliente.title_singular') }} {{ trans('global.list') }}
+          <h5 class="text-center ">CLIENTES.</h5>
     </div>
 
     <div class="card-body">
+    
         <div class="table-responsive">
             <table class=" table table-bordered table-striped table-hover datatable">
                 <thead>
@@ -26,33 +27,32 @@
                             #
                         </th>
                         <th>
-                            {{ trans('global.cliente.fields.nombre') }} 
+                            Nombre
                         </th>
                           <th>
-                            {{ trans('global.cliente.fields.apellido') }} 
+                            Apellido
                         </th>
                        
                         <th>
-                            {{ trans('global.cliente.fields.cedula') }}
+                            Cedula
                         </th>
                         <th>
-                            {{ trans('global.cliente.fields.telefono') }}
+                            Telefono
                         </th>
                         <th>
-                            {{ trans('global.cliente.fields.sexo') }}
+                            Sexo
                         </th>
                         <th>
-                            {{ trans('global.cliente.fields.email') }}
+                            Email
                         </th>
                         <th>
-                            {{ trans('global.cliente.fields.tipo') }}
+                            Tipo
                         </th>
                         <th>
-                            {{ trans('global.cliente.fields.dependencia_id') }}
+                            Dependencia
                         </th>
                         <th>
-                            {{ trans('global.cliente.fields.acciones') }} 
-                            &nbsp;
+                            Acciones
                         </th>
                     </tr>
                 </thead>
@@ -93,20 +93,20 @@
                             </td>
                             <td>
                                  @can('user_show')
-                                    <a class="btn btn-xs btn-success" href="{{ route('admin.clientes.show', $cliente->id) }}">
-                                        {{ trans('global.view') }}
+                                    <a class="btn btn-xs btn-success w-100" href="{{ route('admin.clientes.show', $cliente->id) }}">
+                                        Ver
                                     </a>
                                 @endcan
                                 @can('user_edit')
-                                    <a class="btn btn-xs btn-info" href="{{ route('admin.clientes.edit', $cliente) }}">
-                                        {{ trans('global.edit') }}
+                                    <a class="btn btn-xs btn-info w-100" href="{{ route('admin.clientes.edit', $cliente) }}">
+                                        Editar
                                     </a>
                                 @endcan
                                 @can('user_delete')
-                                    <form action="{{ route('admin.clientes.destroy', $cliente->id) }}" method="POST" onsubmit="return confirm('{{ trans('global.areYouSure') }}');" style="display: inline-block;">
+                                    <form action="{{ route('admin.clientes.destroy', $cliente->id) }}" method="POST" class="w-100" onsubmit="return confirm('{{ trans('global.areYouSure') }}');" style="display: inline-block;">
                                         <input type="hidden" name="_method" value="DELETE">
                                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                                        <input type="submit" class="btn btn-xs btn-danger" value="{{ trans('global.delete') }}">
+                                        <button type="submit" class="btn w-100 btn-xs btn-danger" value="eliminar">Eliminar</button>
                                     </form>
                                 @endcan
                             </td>
@@ -130,7 +130,7 @@
 
 
     $(function () {
-  let deleteButtonTrans = '{{ trans('global.datatables.delete') }}'
+  let deleteButtonTrans = 'Eliminar Seleccion'
   let deleteButton = {
     text: deleteButtonTrans,
     url: "{{ route('admin.clientes.massDestroy') }}",

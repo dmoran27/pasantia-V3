@@ -14,7 +14,7 @@ class Software extends Model
     protected $table = 'softwares';
     protected $fillable = [
     'nombre',
-    'tipos_id',
+    'tipo_id',
     'descripcion',
     'user_id',
     ];
@@ -29,7 +29,11 @@ class Software extends Model
 
 public function tipo()
     {
-        return $this->BelongsTo(Tipo::class, 'tipos_id');
+        return $this->BelongsTo(Tipo::class, 'tipo_id');
+    }
+       public function ticketSoftwares()
+    {
+        return $this->BelongsToMany(TicketSoftware::class);
     }
 }
 

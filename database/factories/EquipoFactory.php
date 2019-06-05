@@ -13,7 +13,6 @@ $factory->define(App\Equipo::class, function (Faker $faker) {
             'serial'=> str_random(8),
             'estado_equipo'=> $faker->randomElement(['nuevo', 'remplazado', 'dañado', 'obsoleto']),
             'perteneciente'=> $faker->randomElement(['no', 'si']),
-              'observacion'=>$faker->sentence,
               'user_id'=> mt_rand(1,9),
               'tipo_id'=> mt_rand(1,9),
 

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
 use App\Http\Requests\Admin\MassDestroyRoleRequest;
 use App\Http\Requests\Admin\StoreRolesRequest;
 use App\Http\Requests\Admin\UpdateRolesRequest;
@@ -29,7 +30,7 @@ class RolesController extends Controller
         return view('admin.roles.create', compact('permissions'));
     }
 
-    public function store(StoreRolesRequest $request)
+    public function store(Request $request)
     {
         abort_unless(\Gate::allows('role_create'), 403);
 
@@ -50,7 +51,7 @@ class RolesController extends Controller
         return view('admin.roles.edit', compact('permissions', 'role'));
     }
 
-    public function update(UpdateRolesRequest $request, Role $role)
+    public function update(Request $request, Role $role)
     {
         abort_unless(\Gate::allows('role_edit'), 403);
 

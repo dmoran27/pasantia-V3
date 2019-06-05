@@ -76,19 +76,12 @@ public static function boot()
     {
         return $this->belongsToMany(Role::class);
     }
-/*
-
-    //notificar reseteo de contraseña
-    public function sendPasswordResetNotification($token)
-    {
-       $this->notify(new ResetPassword($token));
-    }
-    */
-
-    //relaciones entre las tablas de la base de dato
 
     public function areas(){
         return $this->belongsTo(Area::class, 'area_id');
+    }
+    public function ticketsApoyos(){
+        return $this->belongsToMany(TicketApoyo::class);
     }
      public function tickets()
     {

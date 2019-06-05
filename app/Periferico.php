@@ -10,9 +10,15 @@ class Periferico extends Model
     use SoftDeletes; //Implementamos 
 //campos en la tabla periferico
     protected $dates = ['deleted_at'];
+     protected $perteneciente= ['si', 'no'];
+    protected $estado=['nuevo', 'remplazado', 'dañado', 'obsoleto'];
     protected $table = 'perifericos';
     protected $fillable = [
     'nombre',
+    'estado',
+    'identificador',
+    'perteneciente',
+    'observacion',
     'tipo_id',
     'user_id',
     ];

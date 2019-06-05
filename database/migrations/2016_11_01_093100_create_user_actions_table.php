@@ -23,7 +23,6 @@ class CreateUserActionsTable extends Migration
             $table->timestamps();
             $table->softDeletes();
 
-            $table->index(['deleted_at']);
         });
     }
 

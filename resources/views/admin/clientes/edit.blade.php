@@ -3,11 +3,11 @@
 
 <div class="card">
     <div class="card-header">
-        {{ trans('global.edit') }} {{ trans('global.cliente.title_singular') }}
+          <h5 class="text-center ">ACTUALIZAR DATOS DEL CLIENTE.</h5>
     </div>
 
     <div class="card-body">
-        <form action="{{ route("admin.clientes.update", [$cliente->id]) }}" method="POST" enctype="multipart/form-data">
+        <form action='{{ route("admin.clientes.update", [$cliente->id]) }}' method="POST" enctype="multipart/form-data">
             @csrf
             @method('PUT')
 
@@ -44,7 +44,7 @@
                                 <div class="input-group-prepend">
                                   <span class="input-group-text"><i class="fa fa-phone"></i></span>
                                 </div>
-                                <input type="text"  id="telefono" class="form-control{{ $errors->has('telefono') ? ' is-invalid' : '' }} data-inputmask="&quot;mask&quot;: &quot;(999) 999-9999&quot;" data-mask="" name="telefono" value="{{ old('telefono', isset($cliente) ? $cliente->telefono : '') }}">
+                                <input type="text"  id="telefono" class="form-control{{ $errors->has('telefono') ? ' is-invalid' : '' }}" name="telefono" value="{{ old('telefono', isset($cliente) ? $cliente->telefono : '') }}">
                               </div>
                               <!-- /.input group -->
                     @if($errors->has('telefono'))
@@ -116,7 +116,7 @@
                     </p>
                 @endif
             <div>
-                <input class="btn btn-danger" type="submit" value="{{ trans('global.save') }}">
+                <input class="btn btn-danger" type="submit" value="Actualizar">
             </div>
         </form>
     </div>

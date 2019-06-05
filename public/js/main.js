@@ -1,6 +1,6 @@
 $(document).ready(function () {
   window._token = $('meta[name="csrf-token"]').attr('content')
-
+/*
   ClassicEditor.create(document.querySelector('.ckeditor'))
 
   moment.updateLocale('en', {
@@ -20,7 +20,9 @@ $(document).ready(function () {
 
   $('.timepicker').datetimepicker({
     format: 'HH:mm:ss'
-  })
+  })*/
+
+  
 
   $('.select-all').click(function () {
     let $select2 = $(this).parent().siblings('.select2')

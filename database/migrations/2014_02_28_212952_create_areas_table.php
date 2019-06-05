@@ -18,8 +18,6 @@ class CreateAreasTable extends Migration
             $table->string('nombre');
             $table->text('descripcion');
             $table->softDeletes(); //Nueva línea, para el borrado lógico
-           
-            $table->index(['deleted_at']);
              $table->timestamps();
         });
     }

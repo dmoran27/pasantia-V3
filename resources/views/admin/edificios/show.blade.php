@@ -2,16 +2,17 @@
 @section('content')
 
 <div class="card">
-    <div class="card-header">
-        {{ trans('global.show') }} {{ trans('global.edificio.title') }}
+      <div class="card-header">
+          <h5 class="text-center ">DATOS DEL EDIFICIO.</h5>
     </div>
+
 
     <div class="card-body">
         <table class="table table-bordered table-striped">
             <tbody>
                 <tr>
                     <th>
-                         {{ trans('global.edificio.fields.nombre') }}  
+                         Nombre:  
                     </th>
                     <td>
                         {{ $edificio->nombre ?? '' }}
@@ -20,7 +21,7 @@
                 
                 <tr>
                     <th>
-                          {{ trans('global.edificio.fields.cedula') }} 
+                          Fecha de creación:
                     </th>
                     <td>
                         {{ $edificio->created_at ?? '' }}
@@ -28,20 +29,13 @@
                 </tr>
                 <tr>
                     <th>
-                          {{ trans('global.edificio.fields.telefono') }} 
+                          Fecha de actualización:
                     </th>
                     <td>
                         {{ $edificio->updated_at ?? '' }}
                     </td>
                 </tr>
-                <tr>
-                    <th>
-                          {{ trans('global.edificio.fields.sexo') }} 
-                    </th>
-                    <td>
-                        {{ $edificio->sexo ?? '' }}
-                    </td>
-                </tr>
+               
                 
             </tbody>
         </table>

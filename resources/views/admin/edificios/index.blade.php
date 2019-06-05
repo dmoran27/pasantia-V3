@@ -4,15 +4,15 @@
     <div style="margin-bottom: 10px;" class="row">
         <div class="col-lg-12">
             <a class="btn btn-success" href="{{ route("admin.edificios.create") }}">
-                {{ trans('global.add') }} {{ trans('global.edificio.title_singular') }}
-            </a>
+                Agregar nuevo edificio            </a>
         </div>
     </div>
 @endcan
 <div class="card">
-    <div class="card-header">
-        {{ trans('global.edificio.title_singular') }} {{ trans('global.list') }}
+     <div class="card-header">
+          <h5 class="text-center ">EDIFICIOS.</h5>
     </div>
+
 
     <div class="card-body">
         <div class="table-responsive">
@@ -26,11 +26,11 @@
                             #
                         </th>
                         <th>
-                            {{ trans('global.edificio.fields.nombre') }} 
+                            Nombre 
                         </th>                     
                         
                         <th>
-                            {{ trans('global.edificio.fields.acciones') }} 
+                            Acciones 
                             &nbsp;
                         </th>
                     </tr>
@@ -51,20 +51,20 @@
                              
                             <td>
                                  @can('edificio_show')
-                                    <a class="btn btn-xs btn-success" href="{{ route('admin.edificios.show', $edificio->id) }}">
-                                        {{ trans('global.view') }}
+                                    <a class="btn btn-xs btn-success w-100" href="{{ route('admin.edificios.show', $edificio->id) }}">
+                                        Ver
                                     </a>
                                 @endcan
                                 @can('edificio_edit')
-                                    <a class="btn btn-xs btn-info" href="{{ route('admin.edificios.edit', $edificio) }}">
-                                        {{ trans('global.edit') }}
+                                    <a class="btn btn-xs btn-info w-100" href="{{ route('admin.edificios.edit', $edificio) }}">
+                                        Editar
                                     </a>
                                 @endcan
                                 @can('edificio_delete')
-                                    <form action="{{ route('admin.edificios.destroy', $edificio->id) }}" method="POST" onsubmit="return confirm('{{ trans('global.areYouSure') }}');" style="display: inline-block;">
+                                    <form action="{{ route('admin.edificios.destroy', $edificio->id) }}"class="w-100" method="POST" onsubmit="return confirm('{{ trans('global.areYouSure') }}');" style="display: inline-block;">
                                         <input type="hidden" name="_method" value="DELETE">
                                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                                        <input type="submit" class="btn btn-xs btn-danger" value="{{ trans('global.delete') }}">
+                                        <input type="submit" class="btn w-100 btn-xs btn-danger" value="Eliminar">
                                     </form>
                                 @endcan
                             </td>
@@ -88,7 +88,7 @@
 
 
     $(function () {
-  let deleteButtonTrans = '{{ trans('global.datatables.delete') }}'
+  let deleteButtonTrans = 'Editar Seleccion'
   let deleteButton = {
     text: deleteButtonTrans,
     url: "{{ route('admin.edificios.massDestroy') }}",

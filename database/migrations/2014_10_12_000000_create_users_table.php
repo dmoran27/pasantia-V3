@@ -28,7 +28,6 @@ class CreateUsersTable extends Migration
             $table->rememberToken()->nullable();;
             $table->softDeletes(); //Nueva línea, para el borrado lógico
             $table->timestamps();
-             $table->index(['deleted_at']);
         });
     }
 
