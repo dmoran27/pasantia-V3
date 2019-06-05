@@ -112,7 +112,7 @@
         <h5 class="text-center mb-5">DATOS DEL SERVICIO.</h5>
       </div>
     </div>
-        <div class="row">
+    <div class="row">
                  <div class="form-group {{ $errors->has('prioridad')}} col-12 col-md-6">
                 <label for="prioridad" class=" col-form-label text-md-right">Prioridad*</label>
                 <div class="">   
@@ -185,26 +185,8 @@
 
 </div>
 </div>
-
-     
-</div>
  <script type="text/javascript">
-$(document).ready(function () {                            
-    $("#radio_1, #radio_2", "#radio_3").change(function () {
-        if ($("#radio_1").is(":checked")) {
-            $('#aggCliente').removeClass("d-none");
-            $('#aggCliente').addClass("d-none");
 
-        }
-        else if ($("#radio_2").is(":checked")) {
-           $('#crearCliente').removeClass("d-none");
-           $('#aggCliente').addClass("d-none");
-
-        }
-    });        
-
- 
-});
 
  </script>
 

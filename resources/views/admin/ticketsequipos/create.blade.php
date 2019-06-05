@@ -11,9 +11,9 @@
 			</div>
 		</div>
 		 <div id='type'>
-                <label for="radio_1">Crear equipo</label>
+                <label for="radio_cequipo">Crear equipo</label>
                 <input type='radio' id='radio_cequipo' name='type' value='1' />
-                <label for="radio_1">Agregar equipo</label>
+                <label for="radio_aequipo">Agregar equipo</label>
                 <input type='radio' id='radio_aequipo' name='type' value='2' />
                 
         </div> 
@@ -166,91 +166,43 @@
         </div>
     </div>
 </div>
+@endsection
+@section('scripts')
+@parent
+
+
  <script type="text/javascript">
-$(document).ready(function () {                               
 
-    $('#add').click(function(){
-        var nombre = $("#nombre").val();
-        var propiedad = $('#propiedad').val();
-        if(nombre != '' && propiedad != '' ){             
-            $.ajax({
-                headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},    
-                url: '{{ route("admin.caracteristicas.store") }}',
-                type: 'POST',
-                data: {nombre:nombre, propiedad:propiedad},
-                
-            }).done(function(data){
-                if(data > 0){
-                    swal("Felicidades!", "Elemento Agregado correctamente!", "success");
-                    var id = data;
-                    var findnorecord = $('#userTable tr.norecord').length;
-                    if(findnorecord > 0){
-                      $('#userTable tr.norecord').remove();
-                    }
-                      var tr_str = "<tr data-entry-id='"+id+"'><td><input type='hidden' value="+id+"  /></td><td><input type='text'  class='nombre  d-none w-100' id='nombre-"+id+"' value="+nombre+" placeholder='Marca, Modelo, color, puerto, ...''><p class=''>"+nombre+"</p></td><td><input type='text'  class='propiedad  d-none w-100' id='propiedad-"+id+"' value='"+propiedad+"' placeholder='Marca, Modelo, color, puerto, ...'><p class=''>"+propiedad+"</p></td><td><!--input type='button' value='Editar' class='update btn btn-xs w-100 btn-info' data-id='"+id+"' --><input type='button' class='btn btn-xs w-100 btn-danger delete' value='Eliminar  ' data-id='"+id+"' ></td>"+
-                    "</tr>";
-                    $("#userTable tbody").append(tr_str);
-                    var option="<input name='caracteristicas[]' value="+id+" id='input-"+id+"' />";
-                    $("#caracteristicas").append(option);    
-                    
-                  }else if(data == 0){
-                    swal("UPS!", "Error en el servidor!", "danger");
-                    alert('Error.');
-                  }else{
-                    alert(data);
-                  }
-                  // Empty the input fields
-                  $('#nombre').val('');
-                  $('#propiedad').val('');
-             
-             }).fail(function(x,xs,xt){
-                  //nos dara el error si es que hay alguno
-                 // window.open(JSON.stringify(x));
-                alert('error: ' + x+"\n error string: "+ xs + "\n error throwed: " + xt);
-            });
-        }else{
-            alert(' falta datos');
-        }
-      
+$(document).ready(function(){  
+                          
+    $("#radio_1").on("click", function() {
+            $('#aggCliente').removeClass("d-none");
+            $('#crearCliente').addClass("d-none");
 
-    });
-     $(document).on("click", ".delete" , function() {
-      var delete_id = $(this).data('id');
-      var el = this;
-    swal({
-      title: "Esta Seguro de Eliminar este elemento?",
-      text: "Una vez eliminado no podra recuperarlo!",
-      icon: "warning",
-      dangerMode: true,
-      buttons: {
-        cancel: {
-            text: "Cancelar",
-            visible:true
-        },
-        confirm: {
-            text: "Si"
-        }
-        }
-      }).then((willDelete) => {
-        if (willDelete) {
-            $.ajax({
-                headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    },
-                url: '{{URL::to("/admin/caracteristicas/")}}/'+ delete_id,
-                type: 'delete'
-            })
-                .done( function(response){
-                    swal("Felicidades!", "Elemento Eliminado correctamente!", "success");
-                    $(el).closest( "tr" ).remove();
-                    $('#caracteristicas #input-'+delete_id).remove();
-                
-                 });
-        } 
-    });
+     });
+$("#radio_2").on("click", function() {
+           $('#crearCliente').removeClass("d-none");
+           $('#aggCliente').addClass("d-none");
+
+       
+
+ 
 });
-});
+  $("#radio_aequipo").on("click", function() {
+            $('#aggEquipo').removeClass("d-none");
+            $('#crearEquipo').addClass("d-none");
 
+     });
+$("#radio_cequipo").on("click", function() {
+           $('#crearEquipo').removeClass("d-none");
+           $('#aggEquipo').addClass("d-none");
+
+       
+
+ 
+});
+    
+});
  </script>
 
 
