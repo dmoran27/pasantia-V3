@@ -10,7 +10,7 @@ class Tipo extends Model
     //campos de la tabla de la tabla tipos
     protected $dates = ['deleted_at'];
     protected $table = 'tipos';
-    protected $tipo = ['Equipo', 'Software','Periferico','Componente'];
+    protected $tipo = ['Equipo', 'Software','Periferico','Componente','TicketEquipo','TicketApoyo','TicketSoftware','TicketPeriferico','TicketAdiestramiento','TicketEvento'];
     protected $fillable = [
     'nombre',
     'descripcion',

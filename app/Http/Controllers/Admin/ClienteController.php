@@ -24,10 +24,12 @@ class ClienteController extends Controller{
     }
 
     public function create(){
+
+        abort_unless(\Gate::allows('cliente_create'), 403);
+
         $dependencias = Dependencia::all();
         $enumoption = General::getEnumValues('clientes','sexo');
         $enumoption2 = General::getEnumValues('clientes','tipo');
-        abort_unless(\Gate::allows('cliente_create'), 403);
         return view('admin.clientes.create', compact('enumoption', 'enumoption2', 'dependencias'));
     }
 
@@ -54,6 +56,12 @@ class ClienteController extends Controller{
             }
         
         $cliente = Cliente::create($request->all());
+
+         if(request()->ajax()){
+
+              return response()->json($cliente->id);
+         }
+
         $clientes = Cliente::all();
         $notificacion = array(
             'message' => 'Clientes agregados con exito.', 

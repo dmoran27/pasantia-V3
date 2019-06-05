@@ -34,6 +34,9 @@ class Dependencia extends Model
    public function clientes(){
         return $this->HasMany(Cliente::class);
     }
+    public function equipos(){
+        return $this->HasMany(Equipo::class);
+    }
      public function edificio()
     {
         return $this->BelongsTo(Edificio::class);

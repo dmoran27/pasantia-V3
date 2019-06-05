@@ -20,10 +20,10 @@ class CreateTicketsTable extends Migration
             $table->unsignedInteger('tipo_id');
             $table->foreign('tipo_id')->references('id')->on('tipos');
 
-            $table->enum('estado',['Asignado','Abierto','Cerrado','En espera']);
+            $table->enum('estado',['Abierto','Cerrado','En espera']);
            
             $table->enum('prioridad',['Alta','Media','Baja']); 
-            $table->enum('accion',['Solventado','Revisado','Sin Solucion']);
+            $table->enum('accion',['Solventado','Revisado','Sin Solucion','Sin Revisar']);
            
             $table->text('observacion')->nullable();
            $table->string('tiempo_i');

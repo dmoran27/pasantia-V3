@@ -19,7 +19,7 @@ class CreateTiposTable extends Migration
              $table->text('descripcion');
              $table->unsignedInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users');
-             $table->enum('tipo', ['Equipo', 'Software','Periferico','Componente']);   
+             $table->enum('tipo', ['Equipo', 'Software','Periferico','Componente','TicketEquipo','TicketApoyo','TicketSoftware','TicketPeriferico','TicketAdiestramiento','TicketEvento']);   
              $table->softDeletes(); //Nueva línea, para el borrado lógico
             $table->timestamps();
         });

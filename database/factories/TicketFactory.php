@@ -6,8 +6,8 @@ $factory->define(App\Ticket::class, function (Faker $faker) {
     return [
             'identificador'=> str_random(18),
             'tipo_id'=>mt_rand(1,9),
-            'estado'=> $faker->randomElement(['Asignado','Abierto','Cerrado','En espera']),
-            'accion'=> $faker->randomElement(['Solventado','Revisado','Sin Solucion']),
+            'estado'=> $faker->randomElement(['Abierto','Cerrado','En espera']),
+            'accion'=> $faker->randomElement(['Solventado','Revisado','Sin Solucion','Sin Revisar']),
             'prioridad'=> $faker->randomElement(['Alta','Media','Baja']),
             'traslado_servicio'=> $faker->randomElement(['Si','No']),
             'traslado_ticket'=> $faker->randomElement(['Si','No']),

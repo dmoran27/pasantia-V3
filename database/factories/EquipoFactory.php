@@ -15,6 +15,7 @@ $factory->define(App\Equipo::class, function (Faker $faker) {
             'perteneciente'=> $faker->randomElement(['no', 'si']),
               'user_id'=> mt_rand(1,9),
               'tipo_id'=> mt_rand(1,9),
+              'dependencia_id'=> mt_rand(1,9),
 
     ];
 });

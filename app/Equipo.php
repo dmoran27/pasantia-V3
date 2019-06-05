@@ -22,7 +22,9 @@ class Equipo extends Model
           	'estado_equipo',
             'perteneciente',
             'user_id',
-            'tipo_id'
+            'tipo_id',
+            'dependencia_id'
+
 
     ];
     //observar cambios en la base de datos
@@ -44,6 +46,7 @@ class Equipo extends Model
     {
         return $this->belongsTo(User::class);
     }
+
      public function dependencia()
     {
         return $this->belongsTo(Dependencia::class);
@@ -52,10 +55,6 @@ class Equipo extends Model
      public function tipo()
     {
         return $this->BelongsTo(Tipo::class);
-    }
-
-    public function departamentos(){
-    	return $this->HasMany(Departamento::class);
     }
 
     public function perifericos(){

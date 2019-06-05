@@ -25,6 +25,8 @@ class CreateEquiposTable extends Migration
             $table->enum('perteneciente', ['si', 'no']);
             $table->unsignedInteger('user_id');
             $table->unsignedInteger('tipo_id');
+            $table->unsignedInteger('dependencia_id');
+            $table->foreign('dependencia_id')->references('id')->on('users');
             $table->foreign('user_id')->references('id')->on('users');
             $table->foreign('tipo_id')->references('id')->on('tipos');
             $table->softDeletes(); //Nueva línea, para el borrado lógico

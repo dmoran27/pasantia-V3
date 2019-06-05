@@ -12,8 +12,8 @@ class Ticket extends Model
 //campos de la tabla ticket
     protected $dates = ['deleted_at'];
     protected $table = 'tickets';
-    protected $estado =['Asignado','Abierto','Cerrado','En espera'];
-    protected $accion=['Solventado','Revisado','Sin Solucion'];
+    protected $estado =['Abierto','Cerrado','En espera'];
+    protected $accion=['Solventado','Revisado','Sin Solucion','Sin Revisar'];
     protected $prioridad=['Alta','Media','Baja'];
     protected $traslado_servicio=['no','si'];
     protected $traslado_ticket=['no','si'];
