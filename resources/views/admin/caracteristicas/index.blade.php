@@ -91,11 +91,21 @@
 @section('scripts')
 @parent
 <script>
- $(function () {
+  
+$( document ).ready(function() {
+     if('{{$notificacion}}' != ''){
+            swal({
+  position: 'top-end',
+  type: 'success',
+  title: '{{$notificacion}}',
+  icon: "success",
+  successMode: true,
+  showConfirmButton: false,
+  timer: 2500,
+})
+}
 
-    
- });
-
+});
 
 
     $(function () {

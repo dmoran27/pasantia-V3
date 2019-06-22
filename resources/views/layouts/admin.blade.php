@@ -24,8 +24,10 @@
 
     
 </head>
-
-<body class="sidebar-mini sidebar-open" style="height: auto;">
+ @guest
+     @yield('login')                
+ @else
+<body class="sidebar-mini sidebar-collapse " style="height: auto;">
     <div class="wrapper">
         
         @include('partials.header')
@@ -48,7 +50,8 @@
             {{ csrf_field() }}
         </form>
     </div>
-
+</body>
+ @endguest
 <script src="{{ asset('js/app.js') }}"></script>
     <script src="{{ asset('js/main.js') }}"></script>
 <script src="{{ asset("/bower_components/select2/dist/js/select2.min.js") }}"></script>
@@ -56,13 +59,11 @@
    <!--script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>   
     <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.5.1/min/dropzone.min.js"></script-->
    
-
+<script type="text/javascript">
+     
+</script>
     <script>
         $(function() {
-  let copyButtonTrans = "Copiar"
-  let csvButtonTrans = "CSV"
-  let excelButtonTrans = "Excel"
-  let pdfButtonTrans = "PDF"
   let printButtonTrans = "Imprimir"
   let colvisButtonTrans = "Seleccionar Columnas"
   
@@ -84,44 +85,37 @@
       style:    'multi+shift',
       selector: 'td:first-child'
     },
+
+    language: {
+        "sProcessing":     "Procesando...",
+    "sLengthMenu":     "Registros a Mostrar _MENU_",
+    "sZeroRecords":    "No se encontraron resultados",
+    "sEmptyTable":     "Ningún dato disponible en esta tabla",
+    "sInfo":           "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+    "sInfoEmpty":      "Mostrando registros del 0 al 0 de un total de 0 registros",
+    "sInfoFiltered":   "(filtrado de un total de _MAX_ registros)",
+    "sInfoPostFix":    "",
+    "sSearch":         "Busqueda General:",
+    "sUrl":            "",
+    "sInfoThousands":  ",",
+    "sLoadingRecords": "Cargando...",
+    "oPaginate": {
+        "sFirst":    "Primero",
+        "sLast":     "Último",
+        "sNext":     "Siguiente",
+        "sPrevious": "Anterior"
+    },
+    "oAria": {
+        "sSortAscending":  ": Activar para ordenar la columna de manera ascendente",
+        "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+    }
+      },
     
     order: [],
     scrollX: true,
     pageLength: 100,
     dom: 'lBfrtip<"actions">',
-    buttons: [
-      /*{
-        extend: 'copy',
-        className: 'btn-default',
-        text: copyButtonTrans,
-        exportOptions: {
-          columns: ':visible'
-        }
-      },
-      {
-        extend: 'csv',
-        className: 'btn-default',
-        text: csvButtonTrans,
-        exportOptions: {
-          columns: ':visible'
-        }
-      },
-      {
-        extend: 'excel',
-        className: 'btn-default',
-        text: excelButtonTrans,
-        exportOptions: {
-          columns: ':visible'
-        }
-      },
-      {
-        extend: 'pdf',
-        className: 'btn-default ',
-        text: pdfButtonTrans,
-        exportOptions: {
-          columns: ':visible'
-        }
-      },*/
+    buttons: [     
       {
         extend: 'print',
         className: 'btn-default',

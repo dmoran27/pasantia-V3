@@ -15,7 +15,7 @@ class Dependencia extends Model
            'nombre',
             'piso',
             'edificio_id',
-            'user',
+            'user_id',
     ];
 
     /**

@@ -3,7 +3,7 @@
 
 <div class="card">
     <div class="card-header">
-        {{ trans('global.show') }} {{ trans('global.user.title') }}
+          <h5 class="text-center ">DATOS DEL AREA.</h5>
     </div>
 
     <div class="card-body">
@@ -11,7 +11,7 @@
             <tbody>
                 <tr>
                     <th>
-                         {{ trans('global.user.fields.nombre') }}  
+                        Nombre
                     </th>
                     <td>
                         {{ $area->nombre ?? '' }}
@@ -19,7 +19,7 @@
                 </tr>
                 <tr>
                     <th>
-                          {{ trans('global.user.fields.apellido') }} 
+                        Descripcion 
                     </th>
                     <td>
                         {{ $area->descripcion ?? '' }}
@@ -41,18 +41,17 @@
                         {{ $area->updated_at ?? '' }}
                     </td>
                 </tr>
-                <tr>
-                    <th>
-                          {{ trans('global.user.fields.sexo') }} 
-                    </th>
-                    <td>
-                        {{ $area->sexo ?? '' }}
-                    </td>
-                </tr>
+          
                 
             </tbody>
         </table>
     </div>
 </div>
-
+ <div class="col-12 d-flex justify-content-between">
+                <a class="btn btn-info" href="{{ route("admin.areas.index") }}">
+                    Volver
+                </a>
+                
+                 
+            </div>
 @endsection

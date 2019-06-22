@@ -1,4 +1,4 @@
-<aside class="main-sidebar sidebar-dark-primary elevation-4" style="min-height: 917px;">
+<aside class="main-sidebar sidebar-dark-primary " style="min-height: 917px;">
     <!-- Brand Logo -->
     <a href="#" class="brand-link">
         <span class="brand-text font-weight-light">ORTSI</span>
@@ -138,12 +138,12 @@
                         </ul>
                     </li>
                 @endcan
-                @can('configuracion_usuario_access')
+                @can('configuracion_tecnico_access')
                     <li class="nav-item has-treeview {{ request()->is('admin/permissions*') ? 'menu-open' : '' }} {{ request()->is('admin/roles*') ? 'menu-open' : '' }} {{ request()->is('admin/users*') ? 'menu-open' : '' }}">
                         <a class="nav-link nav-dropdown-toggle">
                             <i class="fa fa-users-cog"></i>
                             <p>
-                                <span>Gestion de usuarios</span>
+                                <span>Gestion de T&eacute;cnicos</span>
                                 <i class="right fa fa-angle-left"></i>
                             </p>
                         </a>
@@ -155,7 +155,7 @@
 
                                         </i>
                                         <p>
-                                            <span>{{ trans('global.permission.title') }}</span>
+                                            <span>Permisos</span>
                                         </p>
                                     </a>
                                 </li>
@@ -167,7 +167,7 @@
 
                                         </i>
                                         <p>
-                                            <span>{{ trans('global.role.title') }}</span>
+                                            <span>Roles</span>
                                         </p>
                                     </a>
                                 </li>
@@ -179,7 +179,7 @@
 
                                         </i>
                                         <p>
-                                            <span>{{ trans('global.user.title') }}</span>
+                                            <span>T&eacute;cnicos</span>
                                         </p>
                                     </a>
                                 </li>
@@ -193,7 +193,7 @@
                         <a class="nav-link nav-dropdown-toggle">
                             <i class="fa fa-users"></i>
                             <p>
-                                <span>{{ trans('global.configuraciones.title') }}</span>
+                                <span>Configuraciones</span>
                                 <i class="right fa fa-angle-left"></i>
                             </p>
                         </a>
@@ -217,7 +217,7 @@
 
                                         </i>
                                         <p>
-                                            <span>{{ trans('global.area.title') }}</span>
+                                            <span>Areas</span>
                                         </p>
                                     </a>
                                 </li>
@@ -229,7 +229,7 @@
 
                                         </i>
                                         <p>
-                                            <span>{{ trans('global.edificio.title') }}</span>
+                                            <span>Edificios</span>
                                         </p>
                                     </a>
                                 </li>
@@ -241,7 +241,7 @@
 
                                         </i>
                                         <p>
-                                            <span>{{ trans('global.dependencia.title') }}</span>
+                                            <span>Dependencias</span>
                                         </p>
                                     </a>
                                 </li>
@@ -256,11 +256,32 @@
 
                             </i>
                             <p>
-                                <span>{{ trans('global.cliente.title') }}</span>
+                                <span>Usuarios</span>
                             </p>
                         </a>
                     </li>
                 @endcan
+
+                     <li class="nav-item">
+                                        <a class="nav-link" href="{{ route('logout') }}"
+                                           onclick="event.preventDefault();
+                                                         document.getElementById('logout-form').submit();">
+                                            
+                                                 <i class="fa fa-sign-out-alt">
+
+                            </i>
+                            <p>
+                                <span>Salir</span>
+                            </p>
+
+
+                                        </a>
+
+                                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                            @csrf
+                                        </form>
+                                                 
+                                </li>  
                
             </ul>
         </nav>

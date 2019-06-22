@@ -13,27 +13,32 @@
 
             <div class="form-group {{ $errors->has('nombre') ? 'has-error' : '' }}">
                 <label for="nombre">{{ trans('global.area.fields.nombre') }}*</label>
-                <input type="text" id="nombre" name="nombre" class="form-control" value="{{ old('nombre', isset($area) ? $area->nombre : '') }}">
-                @if($errors->has('nombre'))
-                    <p class="help-block">
-                        {{ $errors->first('nombre') }}
-                    </p>
-                @endif
+                <input type="text" id="nombre" name="nombre" class="form-control{{$errors->has('descripcion') ? ' is-invalid' : '' }}" value="{{ old('nombre', isset($area) ? $area->nombre : '') }}">
+               
             </div>
             <div class="form-group {{ $errors->has('descripcion') ? 'has-error' : '' }}">
                 <label for="descripcion">{{ trans('global.area.fields.descripcion') }}*</label>
-                <input type="textarea" id="descripcion" name="descripcion" class="form-control" value="{{ old('descripcion', isset($area) ? $area->descripcion : '') }}">
-                @if($errors->has('descripcion'))
-                    <p class="help-block">
-                        {{ $errors->first('descripcion') }}
-                    </p>
-                @endif
+                <input type="textarea" id="descripcion" name="descripcion" class="form-control{{$errors->has('descripcion') ? ' is-invalid' : '' }}" value="{{ old('descripcion', isset($area) ? $area->descripcion : '') }}">
+               
             </div>
-           
-            <div>
-                <input class="btn btn-danger" type="submit" value="{{ trans('global.save') }}">
+                        @if($errors->all())
+            <div class="bg-danger p-3 mb-2 col-12">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
             </div>
-        </form>
+                 
+                    
+            @endif
+           <div class="col-12 d-flex justify-content-between">
+                <a class="btn btn-info" href="{{ route("admin.areas.index") }}">
+                    Volver
+                </a>
+                <input class="btn btn-success" type="submit" value="Actualizar  ">
+                 
+            </div>        </form>
     </div>
 </div>
 

@@ -14,7 +14,8 @@ class EdificioController extends Controller{
     public function index(){        
         abort_unless(\Gate::allows('edificio_access'), 403);//Comparar si tiene permisos
         $edificios = Edificio::all();
-        return view('admin.edificios.index', compact('edificios'));
+        $notificacion = '';
+        return view('admin.edificios.index', compact('edificios','notificacion' ));
     }
 
      public function show(Edificio $edificio){
@@ -28,11 +29,12 @@ class EdificioController extends Controller{
         return view('admin.edificios.create', compact('edificios'));
     }
 
-    public function store(Request $request){    
+    public function store(Request $request){   
+    $request["user_id"]=auth()->user()->id; 
        abort_unless(\Gate::allows('edificio_create'), 403);
         $validator = Validator::make($request->all(), [
-            'nombre' => 'required|string|max:255',
-            'descripcion' => 'required|string|max:255445',
+            'nombre' => 'required|string|unique:Edificios,nombre,',
+            'descripcion' => 'string',
          ]);
         if ($validator->fails()) {
             
@@ -44,26 +46,24 @@ class EdificioController extends Controller{
         
         $edificio = Edificio::create($request->all());
         $edificios = Edificio::all();
-        $notificacion = array(
-            'message' => 'edificio creada con exito.', 
-            'alert-type' => 'success'
-        );
+          $notificacion = 'Edificio agregado con exito.';
 
         return view('admin.edificios.index', compact('edificios', 'notificacion'));
     }
 
     public function edit(Edificio $edificio){
+        
         $edificios = Edificio::all();
         abort_unless(\Gate::allows('edificio_edit'), 403);      
         return view('admin.edificios.edit', compact('edificio'));
     }
 
     public function update(Request $request, Edificio $edificio){
-
+        $request["user_id"]=auth()->user()->id;
         abort_unless(\Gate::allows('edificio_edit'), 403);
         $validator = Validator::make($request->all(), [
-            'nombre' => 'required|string|max:255|unique:Edificios,nombre,' .$edificio->id,
-            'descripcion' => 'required|string|max:255445',
+            'nombre' => 'required|string|unique:Edificios,nombre,' .$edificio->id,
+            'descripcion' => 'string',
 
         ]);
 
@@ -78,11 +78,9 @@ class EdificioController extends Controller{
          Edificio::findOrFail($edificio->id)->update($request->all());
         $edificio->update($request->all());
         $edificios = Edificio::all();
-        $notificacion = array(
-            'message' => 'edificio creado con exito.', 
-            'alert-type' => 'success'
-        );
-        return view('admin.edificios.index', compact('edificios', 'notificacion'));
+          $notificacion = 'Edificio actializado con exito.';
+
+                  return view('admin.edificios.index', compact('edificios', 'notificacion'));
 
     }
 

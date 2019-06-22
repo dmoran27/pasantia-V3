@@ -15,7 +15,8 @@ class TipoController extends Controller{
     public function index(){        
         abort_unless(\Gate::allows('tipo_access'), 403);//Comparar si tiene permisos
         $tipos = Tipo::all();
-        return view('admin.tipos.index', compact('tipos'));
+        $notificacion = '';
+        return view('admin.tipos.index', compact('tipos','notificacion' ));
     }
 
      public function show(Tipo $tipo){
@@ -33,8 +34,8 @@ class TipoController extends Controller{
         abort_unless(\Gate::allows('tipo_create'), 403);
         $request["user_id"]=auth()->user()->id;
         $validator = Validator::make($request->all(), [
-            'nombre' => 'required|string|max:255',
-            'descripcion' => 'required|string|max:255',
+            'nombre' => 'required|string',
+            'descripcion' => 'string',
             'tipo' => 'required',
             'user_id'=> 'required',
         ]);
@@ -48,10 +49,7 @@ class TipoController extends Controller{
         
         $tipo = Tipo::create($request->all());
         $tipos = Tipo::all();
-        $notificacion = array(
-            'message' => 'tipos agregados con exito.', 
-            'alert-type' => 'success'
-        );
+        $notificacion = 'Tipo agregado con exito.';
         return view('admin.tipos.index', compact('tipos', 'notificacion'));
     }
 
@@ -66,8 +64,8 @@ class TipoController extends Controller{
         abort_unless(\Gate::allows('tipo_edit'), 403); 
          $request["user_id"]=auth()->user()->id;
         $validator = Validator::make($request->all(), [
-             'nombre' => 'required|string|max:255',
-            'descripcion' => 'required|string|max:255',
+             'nombre' => 'required|string',
+            'descripcion' => 'string',
             'tipo' => 'required',
             'user_id'=> 'required',
         ]);
@@ -82,11 +80,8 @@ class TipoController extends Controller{
         
         $tipo->update($request->all());
         $tipos = Tipo::all();
-        $notificacion = array(
-            'message' => 'Usuario creado con exito.', 
-            'alert-type' => 'success'
-        );
-        return view('admin.tipos.index', compact('tipos', 'notificacion'));
+        $notificacion = 'Tipo actualizado con exito.';
+         return view('admin.tipos.index', compact('tipos', 'notificacion'));
     }
 
    

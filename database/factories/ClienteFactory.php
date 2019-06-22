@@ -9,7 +9,7 @@ $factory->define(App\Cliente::class, function (Faker $faker) {
           'nombre'=>$faker->name,
             'apellido' => $faker->firstName,
             'cedula' => mt_rand(10000000,99999999),
-            'telefono' => $faker->phoneNumber,
+            'telefono' => mt_rand(10000000,99999999),
             'sexo' => $faker-> randomElement(['1', '2']),
             'email' => $faker->unique()->safeEmail,
             'tipo' => $faker->randomElement(['Tecnico ORTSI', 'Profesor','Administrativo', 'Estudiante','Directivo', 'Otros']),

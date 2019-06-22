@@ -46,10 +46,13 @@
             
                 
             </div>
-            <div>
-                <input class="btn btn-danger" type="submit" value="Guardar">
-            </div>
-        </form>
+            <div class="col-12 d-flex justify-content-between">
+                <a class="btn btn-info" href="{{ route("admin.clientes.index") }}">
+                    Volver
+                </a>
+                <input class="btn btn-success" type="submit" value="Actualizar">
+                 
+            </div>        </form>
     </div>
 </div>
 

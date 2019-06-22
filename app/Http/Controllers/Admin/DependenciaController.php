@@ -14,7 +14,8 @@ class DependenciaController extends Controller{
     public function index(){        
         abort_unless(\Gate::allows('dependencia_access'), 403);//Comparar si tiene permisos
         $dependencias = Dependencia::all();
-        return view('admin.dependencias.index', compact('dependencias'));
+        $notificacion = '';
+        return view('admin.dependencias.index', compact('dependencias','notificacion' ));
     }
 
      public function show(Dependencia $dependencia){
@@ -30,11 +31,12 @@ class DependenciaController extends Controller{
     }
 
     public function store(Request $request){
+         $request["user_id"]=auth()->user()->id;
         abort_unless(\Gate::allows('dependencia_create'), 403);
         $validator = Validator::make($request->all(), [
-            'nombre' => 'required|string|max:255',
-            'piso' => 'required|string|max:255445',
-            'edificio_id' => 'required|string|max:255445',
+            'nombre' => 'required|string',
+            'piso' => 'required|string',
+            'edificio_id' => 'required',
          ]);
         if ($validator->fails()) {
             
@@ -45,12 +47,8 @@ class DependenciaController extends Controller{
             }
         
         $dependencia = Dependencia::create($request->all());
-        $dependencia->edificios()->sync($request->input('edificios', []));
         $dependencias = Dependencia::all();
-        $notificacion = array(
-            'message' => 'Clientes agregados con exito.', 
-            'alert-type' => 'success'
-        );
+        $notificacion = 'Dependencia agregada con exito.';
         return view('admin.dependencias.index', compact('dependencias', 'notificacion'));
     }
 
@@ -63,19 +61,16 @@ class DependenciaController extends Controller{
     }
 
     public function update(Request $request, Dependencia $dependencia){
+         $request["user_id"]=auth()->user()->id;
         abort_unless(\Gate::allows('dependencia_edit'), 403);    
           $validator = Validator::make($request->all(), [
-            'nombre' => 'required|string|max:255',
-            'piso' => 'required|string|max:255445',
-            'edificio_id' => 'required|string|max:255445',
+            'nombre' => 'required|string',
+            'piso' => 'required|string',
+            'edificio_id' => 'required',
          ]);
         $dependencia->update($request->all());
-        $dependencia->edificio()->sync($request->input('edificio', []));
         $dependencias = Dependencia::all();
-        $notificacion = array(
-            'message' => 'Usuario creado con exito.', 
-            'alert-type' => 'success'
-        );
+          $notificacion = 'Dependencia actualizada con exito.';
         return view('admin.dependencias.index', compact('dependencias', 'notificacion'));
     }
 

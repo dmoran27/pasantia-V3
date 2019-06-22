@@ -56,5 +56,10 @@
         </table>
     </div>
 </div>
+ <div class="col-12 d-flex justify-content-between">
+                <a class="btn btn-info" href="{{ route("admin.dependencias.index") }}">
+                    Volver
+                </a>
+            </div>
 
 @endsection

@@ -14,7 +14,8 @@ class AreaController extends Controller{
     public function index(){        
         abort_unless(\Gate::allows('area_access'), 403);//Comparar si tiene permisos
         $areas = Area::all();
-        return view('admin.areas.index', compact('areas'));
+        $notificacion = '';
+        return view('admin.areas.index', compact('areas','notificacion' ));
     }
 
      public function show(Area $area){
@@ -31,8 +32,8 @@ class AreaController extends Controller{
     public function store(Request $request){    
        abort_unless(\Gate::allows('area_create'), 403);
         $validator = Validator::make($request->all(), [
-            'nombre' => 'required|string|max:255',
-            'descripcion' => 'required|string|max:255445',
+            'nombre' => 'required|string',
+            'descripcion' => 'required|string',
          ]);
         if ($validator->fails()) {
             
@@ -44,10 +45,7 @@ class AreaController extends Controller{
         
         $area = Area::create($request->all());
         $areas = Area::all();
-        $notificacion = array(
-            'message' => 'Area creada con exito.', 
-            'alert-type' => 'success'
-        );
+          $notificacion = 'Area agregada con exito.';
 
         return view('admin.areas.index', compact('areas', 'notificacion'));
     }
@@ -62,8 +60,8 @@ class AreaController extends Controller{
 
         abort_unless(\Gate::allows('area_edit'), 403);
         $validator = Validator::make($request->all(), [
-            'nombre' => 'required|string|max:255|unique:areas,nombre,' .$area->id,
-            'descripcion' => 'required|string|max:255445',
+            'nombre' => 'required|string|unique:areas,nombre,' .$area->id,
+            'descripcion' => 'required|string',
 
         ]);
 
@@ -78,10 +76,7 @@ class AreaController extends Controller{
          Area::findOrFail($area->id)->update($request->all());
         $area->update($request->all());
         $areas = Area::all();
-        $notificacion = array(
-            'message' => 'Area creado con exito.', 
-            'alert-type' => 'success'
-        );
+         $notificacion = 'Area actializada con exito.';
         return view('admin.areas.index', compact('areas', 'notificacion'));
 
     }

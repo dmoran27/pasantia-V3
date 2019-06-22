@@ -30,8 +30,7 @@
                         </th>                     
                         
                         <th>
-                            Acciones 
-                            &nbsp;
+                            Acciones
                         </th>
                     </tr>
                 </thead>
@@ -72,6 +71,7 @@
                         </tr>
                     @endforeach
                 </tbody>
+                
             </table>
         </div>
     </div>
@@ -80,15 +80,25 @@
 @section('scripts')
 @parent
 <script>
- $(function () {
+ 
+$( document ).ready(function() {
+     if('{{$notificacion}}' != ''){
+            swal({
+  position: 'top-end',
+  type: 'success',
+  title: '{{$notificacion}}',
+  icon: "success",
+  successMode: true,
+  showConfirmButton: false,
+  timer: 2500,
+})
+}
 
-    
- });
-
-
+});
 
     $(function () {
-  let deleteButtonTrans = 'Editar Seleccion'
+
+  let deleteButtonTrans = 'Eliminar Seleccion'
   let deleteButton = {
     text: deleteButtonTrans,
     url: "{{ route('admin.edificios.massDestroy') }}",
@@ -98,20 +108,48 @@
           return $(entry).data('entry-id')
       });
 
-      if (ids.length === 0) {
-        alert('{{ trans('global.datatables.zero_selected') }}')
-
+     if (ids.length === 0) {
+         swal("OJO!", "Elemento no existe!", "warning");
         return
       }
 
-      if (confirm('{{ trans('global.areYouSure') }}')) {
-        $.ajax({
-          headers: {'x-csrf-token': _token},
-          method: 'POST',
-          url: config.url,
-          data: { ids: ids, _method: 'DELETE' }})
-          .done(function () { location.reload() })
-      }
+       swal({
+      title: "Esta Seguro de Eliminar este elemento?",
+      text: "Una vez eliminado no podra recuperarlo!",
+      icon: "warning",
+      dangerMode: true,
+      buttons: {
+        cancel: {
+            text: "Cancelar",
+            visible:true
+        },
+        confirm: {
+            text: "Si"
+        }
+        }
+      }).then((willDelete) => {
+        if (willDelete) {
+            $.ajax({
+              headers: {'x-csrf-token': _token},
+              method: 'POST',
+              url: config.url,
+              data: { ids: ids, _method: 'DELETE' }
+            }).done(function () { 
+              swal({
+                position: 'top-end',
+                type: 'success',
+                title:  "Elemento Eliminado correctamente!",
+                icon: "success",
+                successMode: true,
+                showConfirmButton: false,
+                timer: 2500,
+              });
+
+
+
+            location.assign("{{ route('admin.edificios.index') }}").deley(3000) })
+        }
+    });
     }
   }
   let dtButtons = $.extend(true, [], $.fn.dataTable.defaults.buttons)

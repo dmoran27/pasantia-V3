@@ -1,17 +1,17 @@
 @extends('layouts.admin')
 @section('content')
-@can('user_create')
+@can('area_create')
     <div style="margin-bottom: 10px;" class="row">
         <div class="col-lg-12">
             <a class="btn btn-success" href="{{ route("admin.areas.create") }}">
-                {{ trans('global.add') }} {{ trans('global.area.title_singular') }}
+Agregar Area
             </a>
         </div>
     </div>
 @endcan
 <div class="card">
     <div class="card-header">
-        {{ trans('global.area.title_singular') }} {{ trans('global.list') }}
+          <h5 class="text-center ">Lista de Areas</h5>
     </div>
 
     <div class="card-body">
@@ -26,15 +26,13 @@
                             #
                         </th>
                         <th>
-                            {{ trans('global.area.fields.nombre') }} 
-                        </th>
+Nombre                        </th>
                           <th>
-                            {{ trans('global.area.fields.descripcion') }} 
+                           Descripcion
                         </th>                      
                         
                         <th>
-                            {{ trans('global.area.fields.acciones') }} 
-                            &nbsp;
+                            Acciones
                         </th>
                     </tr>
                 </thead>
@@ -55,21 +53,21 @@
                             </td>
                              
                             <td>
-                                 @can('user_show')
-                                    <a class="btn btn-xs btn-success" href="{{ route('admin.areas.show', $area->id) }}">
-                                        {{ trans('global.view') }}
+                                 @can('area_show')
+                                    <a class="btn btn-xs btn-success w-100" href="{{ route('admin.areas.show', $area->id) }}">
+                                        Ver
                                     </a>
                                 @endcan
-                                @can('user_edit')
-                                    <a class="btn btn-xs btn-info" href="{{ route('admin.areas.edit', $area) }}">
-                                        {{ trans('global.edit') }}
+                                @can('area_edit')
+                                    <a class="btn btn-xs btn-info w-100" href="{{ route('admin.areas.edit', $area) }}">
+                                        Editar
                                     </a>
                                 @endcan
-                                @can('user_delete')
-                                    <form action="{{ route('admin.areas.destroy', $area->id) }}" method="POST" onsubmit="return confirm('{{ trans('global.areYouSure') }}');" style="display: inline-block;">
+                                @can('area_delete')
+                                    <form action="{{ route('admin.areas.destroy', $area->id) }}" method="POST" class="w-100" onsubmit="return confirm('{{ trans('global.areYouSure') }}');" style="display: inline-block;">
                                         <input type="hidden" name="_method" value="DELETE">
                                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                                        <input type="submit" class="btn btn-xs btn-danger" value="{{ trans('global.delete') }}">
+                                        <button type="submit" class="btn w-100 btn-xs btn-danger" value="eliminar">Eliminar</button>
                                     </form>
                                 @endcan
                             </td>
@@ -85,7 +83,21 @@
 @section('scripts')
 @parent
 <script>
- $(function () {
+ 
+$( document ).ready(function() {
+     if('{{$notificacion}}' != ''){
+            swal({
+  position: 'top-end',
+  type: 'success',
+  title: '{{$notificacion}}',
+  icon: "success",
+  successMode: true,
+  showConfirmButton: false,
+  timer: 2500,
+})
+}
+
+}); $(function () {
 
     
  });
@@ -93,7 +105,7 @@
 
 
     $(function () {
-  let deleteButtonTrans = '{{ trans('global.datatables.delete') }}'
+  let deleteButtonTrans = 'Eliminar seleccion'
   let deleteButton = {
     text: deleteButtonTrans,
     url: "{{ route('admin.areas.massDestroy') }}",
@@ -103,24 +115,52 @@
           return $(entry).data('entry-id')
       });
 
-      if (ids.length === 0) {
-        alert('{{ trans('global.datatables.zero_selected') }}')
-
+       if (ids.length === 0) {
+         swal("OJO!", "Elemento no existe!", "warning");
         return
       }
 
-      if (confirm('{{ trans('global.areYouSure') }}')) {
-        $.ajax({
-          headers: {'x-csrf-token': _token},
-          method: 'POST',
-          url: config.url,
-          data: { ids: ids, _method: 'DELETE' }})
-          .done(function () { location.reload() })
-      }
-    }
+       swal({
+      title: "Esta Seguro de Eliminar este elemento?",
+      text: "Una vez eliminado no podra recuperarlo!",
+      icon: "warning",
+      dangerMode: true,
+      buttons: {
+        cancel: {
+            text: "Cancelar",
+            visible:true
+        },
+        confirm: {
+            text: "Si"
+        }
+        }
+      }).then((willDelete) => {
+        if (willDelete) {
+            $.ajax({
+              headers: {'x-csrf-token': _token},
+              method: 'POST',
+              url: config.url,
+              data: { ids: ids, _method: 'DELETE' }
+            }).done(function () { 
+              swal({
+                position: 'top-end',
+                type: 'success',
+                title:  "Elemento Eliminado correctamente!",
+                icon: "success",
+                successMode: true,
+                showConfirmButton: false,
+                timer: 2500,
+              });
+
+
+
+            location.assign("{{ route('admin.areas.index') }}").deley(3000) })
+        }
+    });
+  }
   }
   let dtButtons = $.extend(true, [], $.fn.dataTable.defaults.buttons)
-@can('user_delete')
+@can('area_delete')
   dtButtons.push(deleteButton)
 @endcan
 

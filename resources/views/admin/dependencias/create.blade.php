@@ -8,16 +8,12 @@
 
 
     <div class="card-body">
-        <form action="{{ route("admin.areas.store") }}" method="POST" enctype="multipart/form-data">
+        <form action="{{ route("admin.dependencias.store") }}" method="POST" enctype="multipart/form-data">
             @csrf
             <div class="form-group {{ $errors->has('nombre') ? 'has-error' : '' }}">
                 <label for="nombre">Nombre*</label>
-                <input type="text" id="nombre" name="nombre" class="form-control" value="{{ old('nombre') }}">
-                @if($errors->has('nombre'))
-                    <p class="help-block">
-                        {{ $errors->first('nombre') }}
-                    </p>
-                @endif                
+                <input type="text" id="nombre" name="nombre" class="form-control{{ $errors->has('nombre') ? ' is-invalid' : '' }}" value="{{ old('nombre') }}">
+                
             </div>
             <div class="form-group {{ $errors->has('piso')}}">
                 <label for="piso" class=" col-form-label text-md-right">Piso*</label>
@@ -33,24 +29,34 @@
             </div>
             <div class="form-group {{ $errors->has('edificio') ? 'has-error' : '' }}">
                 <label for="edificio">Edificio*</label>
-                    <span class="btn btn-info btn-xs select-all">Seleccionar Todo</span>
-                    <span class="btn btn-info btn-xs deselect-all">Vaciar Campo</span></label>
                 <select name="edificio_id" id="edificio" class="form-control select2" >
                     @foreach($edificios as $id => $edificio)
-                        <option value="{{ $id }}" {{ (in_array($id, old('edificio', [])) || isset($role) && $role->edificio->contains($id)) ? 'selected' : '' }}>
+                        <option value="{{ $edificio->id }}" >
                             {{ $edificio->nombre }}
                         </option>
                     @endforeach
                 </select>
-                @if($errors->has('edificio'))
-                    <p class="help-block">
-                        {{ $errors->first('edificio') }}
-                    </p>
-                @endif
+               
                 
             </div>
-            <div>
-                <input class="btn btn-danger" type="submit" value="Guardar">
+            @if($errors->all())
+            <div class="bg-danger p-3 mb-2 col-12">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+                 
+                    
+            @endif
+            
+            <div class="col-12 d-flex justify-content-between">
+                <a class="btn btn-info" href="{{ route("admin.dependencias.index") }}">
+                    Volver
+                </a>
+                <input class="btn btn-success" type="submit" value="Guardar  ">
+                 
             </div>
         </form>
     </div>

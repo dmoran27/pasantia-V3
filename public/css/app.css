@@ -1535,112 +1535,6 @@ div.DTE div.DTE_Form_Error{color:#b11f1f}div.modal div.DTE div.DTE_Form_Error{di
 		100%{-webkit-transform:scale(1, 1);transform:scale(1, 1)}40%{-webkit-transform:scale(1, 1.5);transform:scale(1, 1.5)}}table.dataTable tbody tr.highlight{background-color:#3399ff !important}table.dataTable tbody tr.highlight,table.dataTable tbody tr.noHighlight,table.dataTable tbody tr.highlight td,table.dataTable tbody tr.noHighlight td{transition:background-color 500ms linear}div.DTE div.DTE_Field div.DTE_Processing_Indicator{top:13px;right:20px}div.DTE div.DTE_Processing_Indicator{top:52px;right:12px}div.DTED_Envelope_Wrapper{position:absolute;top:0;bottom:0;left:50%;height:100%;z-index:11;display:none;overflow:hidden}div.DTED_Envelope_Wrapper div.DTED_Envelope_Shadow{position:absolute;top:-10px;left:10px;right:10px;height:10px;z-index:10;box-shadow:0 0 20px black}div.DTED_Envelope_Wrapper div.DTED_Envelope_Container{position:absolute;top:0;left:5%;width:90%;border-left:1px solid #777;border-right:1px solid #777;border-bottom:1px solid #777;box-shadow:3px 3px 10px #555;border-bottom-left-radius:5px;border-bottom-right-radius:5px;background-color:white}div.DTED_Envelope_Wrapper div.DTED_Envelope_Container div.DTE_Processing_Indicator{right:36px}div.DTED_Envelope_Wrapper div.DTED_Envelope_Container div.DTE_Footer{border-bottom-left-radius:5px;border-bottom-right-radius:5px}div.DTED_Envelope_Wrapper div.DTED_Envelope_Container div.DTED_Envelope_Close{position:absolute;top:16px;right:10px;width:18px;height:18px;cursor:pointer;z-index:12;text-align:center;font-size:12px;background:#F8F8F8;background:linear-gradient(to bottom, #fff, #CCC);text-shadow:0 1px 0 white;border:1px solid #999;border-radius:2px;-moz-border-radius:2px;-webkit-border-radius:2px;box-shadow:0px 0px 1px #999;-moz-box-shadow:0px 0px 1px #999;-webkit-box-shadow:0px 0px 1px #999}div.DTED_Envelope_Background{position:fixed;top:0;left:0;width:100%;height:100%;z-index:10;background:rgba(0,0,0,0.4);background:radial-gradient(ellipse farthest-corner at center, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.4) 100%)}div.DTED_Envelope_Wrapper div.DTED_Envelope_Container div.DTED_Envelope_Close{top:10px;background:transparent;text-shadow:none;box-shadow:none;border:none;font-size:21px;color:black;opacity:0.2}div.DTED_Envelope_Wrapper div.DTED_Envelope_Container div.DTED_Envelope_Close:hover{opacity:1}div.card.multi-value,div.card.multi-restore{padding:0.5em}div.card.multi-value span,div.card.multi-restore span{line-height:1.2em}div.DTE_Bubble div.DTE_Bubble_Liner div.DTE_Bubble_Table>form div.DTE_Form_Content{margin:0 1em}div.DTE_Bubble div.DTE_Bubble_Liner div.DTE_Bubble_Table div.DTE_Form_Buttons{margin-top:1em}div.DTE_Inline div.DTE_Field{width:100%;margin:0}div.DTE_Inline div.DTE_Field>div{max-width:100%;flex:none}div.DTE_Inline div.DTE_Field input{margin:-5px 0 -10px !important}div.DTE_Body div.DTE_Body_Content div.DTE_Field.block label,div.DTE_Body div.DTE_Body_Content div.DTE_Field.block>div{max-width:100%;flex:0 0 100%}div.DTE_Field_Type_checkbox div label,div.DTE_Field_Type_radio div label{margin-left:0.75em;vertical-align:middle}div.DTE div.DTE_Processing_Indicator{top:20px;right:36px}
 @charset "UTF-8";
 
-.login-bg {
-  position: relative;
-  min-height: 100vh !important;
-  background-size: cover !important;
-  background-attachment: fixed !important;
-  background-position: center 0;
-}
-
-.login-bg .logo img {
-  width: 200px !important;
-}
-
-.login-bg .logo h3 {
-  font-weight: 700;
-  font-size: 20px;
-  color: #183884;
-  display: block;
-  border-left: 2px solid #183884;
-  padding-left: 20px;
-}
-
-.login-bg .formulario h4 {
-  font-weight: 700;
-  font-size: 32px;
-  color: #183884;
-  padding: 30px 0px;
-}
-
-.login-bg .formulario .input {
-  border-radius: 50px;
-  padding: 0px 20px;
-  color: #183884 !important;
-  background: rgba(232, 240, 254, 0.6) !important;
-}
-
-.login-bg .formulario .input input {
-  border: none;
-  background: transparent !important;
-  font-size: 20px;
-  color: #183884;
-}
-
-.login-bg .formulario .input input::-webkit-input-placeholder {
-  color: #183884;
-}
-
-.login-bg .formulario .input input::-moz-placeholder {
-  color: #183884;
-}
-
-.login-bg .formulario .input input:-ms-input-placeholder {
-  color: #183884;
-}
-
-.login-bg .formulario .input input::-ms-input-placeholder {
-  color: #183884;
-}
-
-.login-bg .formulario .input input::placeholder {
-  color: #183884;
-}
-
-.login-bg .formulario .input input::-webkit-input-placeholder {
-  color: #183884;
-}
-
-.login-bg .formulario .input input::-moz-placeholder {
-  color: #183884;
-}
-
-.login-bg .formulario .input input:-ms-input-placeholder {
-  color: #183884;
-}
-
-.login-bg .formulario .input input:-moz-placeholder {
-  color: #183884;
-}
-
-.login-bg .formulario .input input:focus,
-.login-bg .formulario .input input:active {
-  border: none !important;
-  box-shadow: none !important;
-}
-
-.login-bg .form-group {
-  color: #000;
-}
-
-.login-bg .form-group .btn {
-  border-radius: 50px;
-  color: #e8f0fe !important;
-  background: #183884 !important;
-}
-
-.login-bg .form-group .btn:hover {
-  background: #e8f0fe !important;
-  color: #183884 !important;
-}
-
-@media screen and (max-width: 557px) {
-  .login-bg .logo h3 {
-    padding: 20px 0px;
-    border-left: none;
-  }
-}
-
 /*!
  * Font Awesome Free 5.8.2 by @fontawesome - https://fontawesome.com
  * License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License)
@@ -7418,37 +7312,137 @@ readers do not read off random characters that represent icons */
   font-family: "Font Awesome 5 Brands";
 }
 
-/*
-@import '~datatables.net-se/css/dataTables.semanticui.min.css';
-@import '~datatables.net-buttons-se/css/buttons.semanticui.min.css';
-@import '~datatables.net-editor-se/css/editor.semanticui.min.css';
-@import '~datatables.net-select-se/css/select.semanticui.min.css';
-@import '~datatables.net-scroller-se/css/scroller.semanticui.min.css';
-@import '~datatables.net-rowreorder-se/css/rowreorder.semanticui.min.css';
-@import '~datatables.net-rowgroup-se/css/rowgroup.semanticui.min.css';
-@import '~datatables.net-fixedheader-se/css/fixed	header.semanticui.min.css';
+.login-bg {
+  position: relative;
+  min-height: 100vh !important;
+  background-size: cover !important;
+  background-attachment: fixed !important;
+  background-position: center 0;
+}
 
+.login-bg .logo img {
+  width: 200px !important;
+}
 
+.login-bg .logo p {
+  font-weight: 700;
+  color: #183884;
+  display: block;
+  border-left: 2px solid #183884;
+  padding-left: 20px;
+}
 
+.login-bg .formulario h4 {
+  font-weight: 700;
+  font-size: 32px;
+  color: #183884;
+  padding: 30px 0px;
+}
 
+.login-bg .formulario .input {
+  border-radius: 50px;
+  padding: 0px 20px;
+  color: #183884 !important;
+  background: rgba(232, 240, 254, 0.6) !important;
+}
 
+.login-bg .formulario .input input {
+  border: none;
+  background: transparent !important;
+  font-size: 20px;
+  color: #183884;
+}
 
+.login-bg .formulario .input input::-webkit-input-placeholder {
+  color: #183884;
+}
 
-   <script src="https://cdn.ckeditor.com/ckeditor5/11.0.1/classic/ckeditor.js") }}"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js") }}"></script>
- <script src='{{ asset("/bower_components/atatables.net-autofill-bs4/js/autoFill.bootstrap4.min.js') }}"></script>
- <script src='{{ asset("/bower_components/atatables.net-buttons-bs4/js/buttons.bootstrap4.min.js") }}'></script>
- <script src='{{ asset("/bower_components/atatables.net-colreorder-bs4/js/colreorder.bootstrap4.min.js") }}'></script>
- <script src='{{ asset("/bower_components/atatables.net-fixedcolumns-bs4/js/fixedcolumns.bootstrap4.min.js") }}'></script>
- <script src='{{ asset("/bower_components/atatables.net-fixedheader-bs4/js/fixedHeader.bootstrap4.min.js") }}'></script>
- <script src='{{ asset("/bower_components/atatables.net-keytable-bs4/js/keyTable.bootstrap4.min.js") }}'></script>
- <script src='{{ asset("/bower_components/atatables.net-responsive-bs4/js/responsive.bootstrap4.min.js") }}'></script>
- <script src='{{ asset("/bower_components/atatables.net-rowgroup-bs4/js/rowGroup.bootstrap4.min.js") }}'></script>
- <script src='{{ asset("/bower_components/atatables.net-rowreorder-bs4/js/rowReorder.bootstrap4.min.js") }}'></script>
- <script src='{{ asset("/bower_components/atatables.net-scroller-bs4/js/scroller.bootstrap4.min.js") }}'></script>
- <script src='{{ asset("/bower_components/atatables.net-select-bs4/js/select.bootstrap4.min.js") }}'></script>
- <script src='{{ asset("/bower_components/atatables.net-editor-bs4/js/editor.bootstrap4.min.js") }}'></script>
-*/
+.login-bg .formulario .input input::-moz-placeholder {
+  color: #183884;
+}
+
+.login-bg .formulario .input input:-ms-input-placeholder {
+  color: #183884;
+}
+
+.login-bg .formulario .input input::-ms-input-placeholder {
+  color: #183884;
+}
+
+.login-bg .formulario .input input::placeholder {
+  color: #183884;
+}
+
+.login-bg .formulario .input input::-webkit-input-placeholder {
+  color: #183884;
+}
+
+.login-bg .formulario .input input::-moz-placeholder {
+  color: #183884;
+}
+
+.login-bg .formulario .input input:-ms-input-placeholder {
+  color: #183884;
+}
+
+.login-bg .formulario .input input:-moz-placeholder {
+  color: #183884;
+}
+
+.login-bg .formulario .input input:focus,
+.login-bg .formulario .input input:active {
+  border: none !important;
+  box-shadow: none !important;
+}
+
+.login-bg .form-group {
+  color: #000;
+}
+
+.login-bg .form-group .btn {
+  border-radius: 50px;
+  color: #e8f0fe !important;
+  background: #183884 !important;
+}
+
+.login-bg .form-group .btn:hover {
+  background: #e8f0fe !important;
+  color: #183884 !important;
+}
+
+@media screen and (max-width: 557px) {
+  .login-bg .logo h3 {
+    padding: 20px 0px;
+    border-left: none;
+  }
+}
+
+.myAlert-top {
+  position: fixed;
+  top: 5px;
+  left: 2%;
+  width: 96%;
+}
+
+.myAlert-bottom {
+  position: fixed;
+  bottom: 5px;
+  left: 2%;
+  width: 96%;
+}
+
+div.fullscreen {
+  position: absolute;
+  width: 100%;
+  height: 960px;
+  top: 0;
+  left: 0;
+  background-color: lightblue;
+}
+
+.alert {
+  display: none;
+}
 
 .navbar-laravel {
   background-color: #fff;

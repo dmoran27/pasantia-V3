@@ -15,7 +15,8 @@ class ClienteController extends Controller{
     public function index(){        
         abort_unless(\Gate::allows('cliente_access'), 403);//Comparar si tiene permisos
         $clientes = Cliente::all();
-        return view('admin.clientes.index', compact('clientes'));
+         $notificacion = '';
+        return view('admin.clientes.index', compact('clientes','notificacion' ));
     }
 
      public function show(Cliente $cliente){
@@ -30,21 +31,24 @@ class ClienteController extends Controller{
         $dependencias = Dependencia::all();
         $enumoption = General::getEnumValues('clientes','sexo');
         $enumoption2 = General::getEnumValues('clientes','tipo');
+        
         return view('admin.clientes.create', compact('enumoption', 'enumoption2', 'dependencias'));
     }
 
     public function store(Request $request){
         abort_unless(\Gate::allows('cliente_create'), 403);
         $request["user_id"]=auth()->user()->id;
+        $email=$request->email;
+        $request["email"]= $email."@unexpo.com";
         $validator = Validator::make($request->all(), [
             'nombre' => 'required|string|max:255',
             'apellido' => 'required|string|max:255',
-            'cedula' => 'required|string|unique:clientes|max:10',
-            'telefono' => 'string|max:50|nullable',
+            'cedula' => 'required|integer|unique:clientes,cedula',
+            'telefono' => 'integer|nullable',
             'sexo' => 'required',
             'tipo' => 'required',
             'dependencia_id' => 'required',
-            'email' => 'string|email|max:255|nullable',
+            'email' => 'string|email|unique:clientes,email',
             'user_id'=> 'required',
         ]);
         if ($validator->fails()) {
@@ -63,10 +67,7 @@ class ClienteController extends Controller{
          }
 
         $clientes = Cliente::all();
-        $notificacion = array(
-            'message' => 'Clientes agregados con exito.', 
-            'alert-type' => 'success'
-        );
+        $notificacion = 'Usuario agregado con exito.';
         return view('admin.clientes.index', compact('clientes', 'notificacion'));
     }
 
@@ -74,39 +75,40 @@ class ClienteController extends Controller{
         $dependencias = Dependencia::all();
          $enumoption2 = General::getEnumValues('clientes','tipo');
         $enumoption = General::getEnumValues('clientes','sexo');
+        $email= explode("@",$cliente->email);
         abort_unless(\Gate::allows('cliente_edit'), 403);      
-        return view('admin.clientes.edit', compact('enumoption','enumoption2', 'dependencias', 'cliente'));
+        return view('admin.clientes.edit', compact('enumoption','enumoption2', 'dependencias', 'cliente', 'email'));
     }
 
     public function update(Request $request, Cliente $cliente){
         abort_unless(\Gate::allows('cliente_edit'), 403); 
          $request["user_id"]=auth()->user()->id;
+          $email=$request->email;
+        $request["email"]= $email."@unexpo.com";
         $validator = Validator::make($request->all(), [
            'nombre' => 'required|string|max:255',
             'apellido' => 'required|string|max:255',
-            'cedula' => 'required|string|max:10',
-            'telefono' => 'string|max:50|nullable',
+            'cedula' => 'required|integer|unique:clientes,cedula,'.$cliente->id,
+            'telefono' => 'integer|nullable',
             'sexo' => 'required|string|max:10',
             'tipo' => 'required|string|max:20',
             'dependencia_id' => 'required|string|max:255',
-            'email' => 'string|email|max:255|nullable',
+            'email' => 'string|email|unique:clientes,email,'.$cliente->id,
             'user_id'=> 'required',
         ]);
 
          if ($validator->fails()) {
             
            return redirect()
-                        ->route('admin.clientes.edit', $user)
+                        ->route('admin.clientes.edit', $cliente)
                         ->withErrors($validator)
                         ->withInput();
             }  
         
         $cliente->update($request->all());
         $clientes = Cliente::all();
-        $notificacion = array(
-            'message' => 'Usuario creado con exito.', 
-            'alert-type' => 'success'
-        );
+       $notificacion = 'Usuario actualizado con exito.';
+
         return view('admin.clientes.index', compact('clientes', 'notificacion'));
     }
 

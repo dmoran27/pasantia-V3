@@ -28,37 +28,37 @@
 @import '~datatables.net-editor-bs4/css/editor.bootstrap4.min.css' ;
 @import 'variables';
 @import "style";
-/*
-@import '~datatables.net-se/css/dataTables.semanticui.min.css';
-@import '~datatables.net-buttons-se/css/buttons.semanticui.min.css';
-@import '~datatables.net-editor-se/css/editor.semanticui.min.css';
-@import '~datatables.net-select-se/css/select.semanticui.min.css';
-@import '~datatables.net-scroller-se/css/scroller.semanticui.min.css';
-@import '~datatables.net-rowreorder-se/css/rowreorder.semanticui.min.css';
-@import '~datatables.net-rowgroup-se/css/rowgroup.semanticui.min.css';
-@import '~datatables.net-fixedheader-se/css/fixed	header.semanticui.min.css';
 
 
 
 
+.myAlert-top{
+    position: fixed;
+    top: 5px; 
+    left:2%;
+    width: 96%;
+}
 
+.myAlert-bottom{
+    position: fixed;
+    bottom: 5px;
+    left:2%;
+    width: 96%;
+}
 
+div.fullscreen {
+  position: absolute;
+  width:100%; 
+  height:960px; 
+  top: 0; 
+  left: 0; 
+  background-color: lightblue;
+}
 
-   <script src="https://cdn.ckeditor.com/ckeditor5/11.0.1/classic/ckeditor.js") }}"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js") }}"></script>
- <script src='{{ asset("/bower_components/atatables.net-autofill-bs4/js/autoFill.bootstrap4.min.js') }}"></script>
- <script src='{{ asset("/bower_components/atatables.net-buttons-bs4/js/buttons.bootstrap4.min.js") }}'></script>
- <script src='{{ asset("/bower_components/atatables.net-colreorder-bs4/js/colreorder.bootstrap4.min.js") }}'></script>
- <script src='{{ asset("/bower_components/atatables.net-fixedcolumns-bs4/js/fixedcolumns.bootstrap4.min.js") }}'></script>
- <script src='{{ asset("/bower_components/atatables.net-fixedheader-bs4/js/fixedHeader.bootstrap4.min.js") }}'></script>
- <script src='{{ asset("/bower_components/atatables.net-keytable-bs4/js/keyTable.bootstrap4.min.js") }}'></script>
- <script src='{{ asset("/bower_components/atatables.net-responsive-bs4/js/responsive.bootstrap4.min.js") }}'></script>
- <script src='{{ asset("/bower_components/atatables.net-rowgroup-bs4/js/rowGroup.bootstrap4.min.js") }}'></script>
- <script src='{{ asset("/bower_components/atatables.net-rowreorder-bs4/js/rowReorder.bootstrap4.min.js") }}'></script>
- <script src='{{ asset("/bower_components/atatables.net-scroller-bs4/js/scroller.bootstrap4.min.js") }}'></script>
- <script src='{{ asset("/bower_components/atatables.net-select-bs4/js/select.bootstrap4.min.js") }}'></script>
- <script src='{{ asset("/bower_components/atatables.net-editor-bs4/js/editor.bootstrap4.min.js") }}'></script>
-*/
+.alert{
+    display: none;
+}
+	
 .navbar-laravel {
   background-color: #fff;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
